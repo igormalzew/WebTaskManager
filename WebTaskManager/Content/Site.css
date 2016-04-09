@@ -1,0 +1,66 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay-Italic';
+  src:url(/fonts/PlayfairDisplay-Italic.ttf)
+}
+
+.absolute-center {
+  width: 100%;
+  height: 60%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.image-screen {
+	background: url(/Content/images/mainImage.jpg) no-repeat center center fixed; 
+	background-size: cover;
+    min-height:100%;
+    margin: 0; height: 100%
+}
+#mainInput {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+#mainSlider {
+    max-width: 700px;
+    width: 100%;
+}
+
+.bl-mark {
+    display: inline-block;
+    width: 10px;
+    height: 90%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.ng-table-sort-header {
+    background-color: rgb(250, 250, 250);
+}
+.btn-mini {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 2px 6px;
+    vertical-align: middle;
+}

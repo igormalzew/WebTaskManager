@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Авторизация";
+}
+<!DOCTYPE html>
+<html ng-app ="AuthorizationApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/minimaze-hidden.js"></script>
+    <script src="~/Models/js/AuthorizationModel.js"></script>
+</head>
+<body  ng-controller ="Authorization" class="image-screen">
+    <div class="absolute-center">
+        <div align="center">
+            <h1 class="minimaze-hidden" style="font-family: PlayfairDisplay-Italic; font-size: 60px; color: white">Управляй своей жизнью</h1>
+            <h2 class="minimaze-hidden" style="font-family: PlayfairDisplay-Italic, cursive; font-size: 45px; color: white">Экономь время для действительно важных вещей</h2>
+            <br />
+            <div>
+                <div class="col-md-12">
+                    <input type="text" ng-model ="Login" class="form-control" placeholder="Имя пользователя" style="height: 40px; width: 250px;"/>
+                    <input type="password" ng-model ="Password" class="form-control" placeholder="Пароль" style="height: 40px; width: 250px;">
+                    <br/>
+                    <button class="btn btn-primary" ng-click="btnLogin()" style="height: 40px; width: 250px; font-size: 20px">Войти</button>
+                    <br/>
+                    <a style="color: white" href="/Home/LogOut">Забыли логин или пароль?</a>
+                    <br/> <br />
+                    <div class="alert alert-danger col-md-2 col-md-offset-5" ng-show="IsError">{{ErrorMessage}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

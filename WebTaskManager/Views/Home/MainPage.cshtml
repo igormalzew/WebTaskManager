@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "MainPage";
+}
+
+<!DOCTYPE html>
+<html ng-app="TaskApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ng-table.min.js"></script>
+    <link rel="stylesheet" href="~/Content/ng-table.min.css">
+    <link rel="stylesheet" href="~/Content/daterangepicker.css">
+    <script src="~/Models/js/TaskModel.js"></script>
+    <script src="~/Scripts/bootstrap-slider.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+    <script>moment.locale('ru')</script>
+    <script src="~/Scripts/daterangepicker.js"></script>
+    <link rel="stylesheet" href="~/Content/slider.css">
+</head>
+<body ng-controller="TaskController as vm" class="image-screen" style="background: url(/Content/images/2560x16011.jpg) no-repeat center center fixed;">
+    <br /><br /><br /><br />
+    <div class="jumbotron col-md-8 col-md-offset-2" style="background-color: rgba(0, 0, 0, 0.3); border-radius: 10px">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
+                <input id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на выбранную дату" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
+                <span class="input-group-btn" style="height: inherit">
+                    <button type="button" class="btn btn-default" style="height: 50px; width: 50px">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" style="height: 50px; width: 50px">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                </span>
+            </div>
+            @*<br />
+            <input id="mainSlider" type="text" />
+            <script>$("#mainSlider").slider({ id: "mainSlider", min: 0, max: 100, value: 50 })</script>*@
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2" style="align-content: flex-end">
+        <div class="row">
+            <div class="col-md-2" style="background-color: rgba(250, 250, 250, 1); border-radius: 10px">
+                <br/>
+                <div>
+                    <strong style="font-size: 110%">
+                        <span class="glyphicon glyphicon-calendar"></span>&nbsp;Дата
+                    </strong>
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; border-radius: 10px">
+                        <i class="glyphicon glyphicon-calendar"></i>&nbsp;
+                        <span></span> <b class="caret"></b>
+                    </div>
+                    <script src="~/Scripts/datarange.js"></script>
+                </div>
+                <div class="col-md-12" style="height: 10px"></div>
+
+                <label style="font-weight: normal; cursor: pointer;">
+                    <input type="checkbox"> Показать выполненные
+                </label>
+
+                <div class="col-md-12" style="height: 10px"></div>
+
+                <button class="btn btn-default" data-toggle="collapse" data-target="#togglePriority"><span class="glyphicon glyphicon-star"></span>&nbsp;Приоритет <span class="glyphicon glyphicon-menu-down"></span></button>
+
+                <div id="togglePriority" class="collapse in" style="border-radius: 10px">
+                    <p style="background: #F9F9F9; border: 1px solid #E1E1E8; margin: 10px 0; padding: 8px; border-radius: 8px">
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Высокий <input type="checkbox">
+                        </label><br/>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Средний <input type="checkbox">
+                        </label><br/>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Низкий <input type="checkbox">
+                        </label>
+                    </p>
+                </div>
+
+                <div class="col-md-12" style="height: 10px"></div>
+
+                <button class="btn btn-default" data-toggle="collapse" data-target="#toggleCategory"><span class="glyphicon glyphicon-tasks"></span>&nbsp;Категория <span class="glyphicon glyphicon-menu-down"></span></button>
+                <button class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
+
+                <div id="toggleCategory" class="collapse in">
+                    <p style="background: #F9F9F9; border: 1px solid #E1E1E8; margin: 10px 0; padding: 8px; border-radius: 8px">
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Высокий <input type="checkbox">
+                        </label><br/>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Средний <input type="checkbox">
+                        </label><br/>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            Низкий <input type="checkbox">
+                        </label>
+                    </p>
+                </div>
+
+                <div class="col-md-12" style="height: 10px"></div>
+
+                <div class="col-md-10 col-md-offset-1">
+                    <button class="btn btn-primary" style="width: auto">&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;Показать&nbsp;&nbsp;</button>
+                </div>
+
+                <div class="col-md-12" style="height: 15px"></div>
+
+            </div>
+            <div class="col-md-10">
+                <div class="col-md-12" style="height: 10px"></div>
+                <table ng-table="vm.tableParams" class="table table-condensed table-striped" style="background-color: rgba(235, 235, 235, 1);">
+                    <tr ng-repeat="user in $data" style="height: 30px; position: relative">
+                        <td title="'Наименование'" sortable="'name'" style="width: 60%">
+                            <span class="bl-mark" style="background-color: red"></span>
+                            &nbsp; {{user.name}}
+                            <a class="btn btn-default pull-right row-info-sign btn-mini">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                        <td title="'Дата'" sortable="'age'" style="width: 15%;">
+                            {{user.age}}
+                        </td>
+                        <td title="'Затраты'" style="width: 10%;">
+                            {{user.age}}
+                        </td>
+                        <td title="'Приоритет'" style="width: 15%;">
+                            {{user.age}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12" style="height: 250px"></div>
+    </div>
+</body>
+</html>
+
