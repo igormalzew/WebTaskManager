@@ -7,7 +7,15 @@
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="20" Nullable="false" />
   </EntityType>
-  <EntityType Name="LoseAuthorization">
+  <EntityType Name="CoockieByLogin">
+    <Key>
+      <PropertyRef Name="CoockieId" />
+    </Key>
+    <Property Name="CoockieId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Coockie" Type="varchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LoseAuth">
     <Key>
       <PropertyRef Name="LoseId" />
     </Key>
@@ -60,14 +68,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__LoseAutho__UserI__29572725">
+  <Association Name="FK__CoockieBy__Coock__72C60C4A">
     <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="LoseAuthorization" Type="Self.LoseAuthorization" Multiplicity="*" />
+    <End Role="CoockieByLogin" Type="Self.CoockieByLogin" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="UserId" />
       </Principal>
-      <Dependent Role="LoseAuthorization">
+      <Dependent Role="CoockieByLogin">
+        <PropertyRef Name="CoockieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LoseAuth__UserId__49C3F6B7">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="LoseAuth" Type="Self.LoseAuth" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LoseAuth">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
@@ -98,7 +118,8 @@
   </Association>
   <EntityContainer Name="DBTaskManagerModelStoreContainer">
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="LoseAuthorization" EntityType="Self.LoseAuthorization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CoockieByLogin" EntityType="Self.CoockieByLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoseAuth" EntityType="Self.LoseAuth" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -106,9 +127,13 @@
       <End Role="Task" EntitySet="Task" />
       <End Role="Category" EntitySet="Category" />
     </AssociationSet>
-    <AssociationSet Name="FK__LoseAutho__UserI__29572725" Association="Self.FK__LoseAutho__UserI__29572725">
+    <AssociationSet Name="FK__CoockieBy__Coock__72C60C4A" Association="Self.FK__CoockieBy__Coock__72C60C4A">
       <End Role="User" EntitySet="User" />
-      <End Role="LoseAuthorization" EntitySet="LoseAuthorization" />
+      <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LoseAuth__UserId__49C3F6B7" Association="Self.FK__LoseAuth__UserId__49C3F6B7">
+      <End Role="User" EntitySet="User" />
+      <End Role="LoseAuth" EntitySet="LoseAuth" />
     </AssociationSet>
     <AssociationSet Name="FK__Priority__Priori__25869641" Association="Self.FK__Priority__Priori__25869641">
       <End Role="Task" EntitySet="Task" />

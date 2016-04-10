@@ -45,12 +45,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LoseAuthorization">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.LoseAuthorization)">
-        <MappingFragment StoreEntitySet="LoseAuthorization">
-          <ScalarProperty Name="LoseId" ColumnName="LoseId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
+    <EntitySetMapping Name="LoseAuth">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.LoseAuth">
+        <MappingFragment StoreEntitySet="LoseAuth">
           <ScalarProperty Name="LoseTime" ColumnName="LoseTime" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoseId" ColumnName="LoseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CoockieByLogin">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.CoockieByLogin">
+        <MappingFragment StoreEntitySet="CoockieByLogin">
+          <ScalarProperty Name="Coockie" ColumnName="Coockie" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

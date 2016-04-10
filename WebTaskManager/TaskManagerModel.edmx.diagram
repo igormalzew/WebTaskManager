@@ -9,11 +9,13 @@
         <EntityTypeShape EntityType="DBTaskManagerModel.Priority" Width="1.5" PointX="2.5" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBTaskManagerModel.Task" Width="1.5" PointX="4" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBTaskManagerModel.User" Width="1.5" PointX="6.375" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuthorization" Width="1.5" PointX="8.75" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Task__UserId__21B6055D" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__LoseAutho__UserI__22AA2996" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__267ABA7A" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Priority__Priori__25869641" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="7.875" PointY="4.125" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="9.75" PointY="1.125" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__CoockieBy__Coock__72C60C4A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

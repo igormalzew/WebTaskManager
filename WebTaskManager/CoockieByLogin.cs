@@ -12,11 +12,11 @@ namespace WebTaskManager
     using System;
     using System.Collections.Generic;
     
-    public partial class LoseAuthorization
+    public partial class CoockieByLogin
     {
+        public int CoockieId { get; set; }
         public int UserId { get; set; }
-        public System.DateTime LoseTime { get; set; }
-        public int LoseId { get; set; }
+        public string Coockie { get; set; }
     
         public virtual User User { get; set; }
     }

@@ -161,17 +161,25 @@
     <Compile Include="Category.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CoockieByLogin.cs">
+      <DependentUpon>TaskManagerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\MyAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LoseAuthorization.cs">
+    <Compile Include="LoseAuth.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\repository\AuthorizationUserInfo.cs" />
+    <Compile Include="Models\repository\ErrorResult.cs" />
     <Compile Include="Priority.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Task.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
@@ -213,6 +221,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\js\RegistrationModel.js" />
     <Content Include="Models\js\AuthorizationModel.js" />
     <Content Include="Models\js\TaskModel.js" />
     <Content Include="Scripts\angular.js" />
@@ -276,6 +285,10 @@
     <Content Include="TaskManagerModel.edmx.diagram">
       <DependentUpon>TaskManagerModel.edmx</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Authorization\" />
+    <Folder Include="Views\Registration\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

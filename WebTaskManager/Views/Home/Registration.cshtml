@@ -3,55 +3,97 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html ng-app="RegistrationApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Models/js/RegistrationModel.js"></script>
 </head>
-<body class="image-screen">
+<body ng-controller="Registration" class="image-screen">
     <div class="absolute-center">
         <div class="col-md-6 col-md-offset-3">
             <div class="jumbotron" style="background-color: rgba(0, 0, 0, 0.3); border-radius: 10px">
                 <div align="center">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="text" ng-model="Name" placeholder="Ваше имя" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="NameErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{NameErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="text" ng-model="Login" placeholder="Логин" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="LoginErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{LoginErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="Password" ng-model="Password" placeholder="Пароль" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="PasswordErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{PasswordErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="Password" ng-model="PasswordClone" placeholder="Повторите пароль" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="PasswordCloneErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{PasswordCloneErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="email" ng-model="Email" placeholder="Введите email" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="EmailErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{EmailErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <input class="form-control" type="text" ng-model="BirthDay" placeholder="Дата рождения Напр.: 01.01.2001" style="height: 40px; width: 250px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="help-block" ng-show="BirthDayErMs != ''" style="color: #337AB7; font-size: 16px; text-align: left;">{{BirthDayErMs}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     <div class="col-md-12">
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="text" class="form-control" placeholder="Ваше имя" style="height: 40px; width: 250px;"/>
-                            </div>
+                        <br/>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-md-offset-4">
+                            <button class="btn btn-primary" ng-click="btbRegister()" style="height: 40px; width: 250px; font-size: 20px;">Регистрация</button>
                         </div>
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="text" class="form-control" placeholder="Имя пользователя" style="height: 40px; width: 250px;"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="password" class="form-control" placeholder="Пароль" style="height: 40px; width: 250px;">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="password" class="form-control" placeholder="Повторите пароль" style="height: 40px; width: 250px;">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="email" class="form-control" placeholder="Email" style="height: 40px; width: 250px;">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="align-content: center">
-                                <input type="text" class="form-control" placeholder="Дата рождения" style="height: 40px; width: 250px;">
-                            </div>
+                        <br/>
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="alert {{IsError == true ? 'alert-danger' : 'alert-success'}} " ng_show="RegAnswerMsg !=''" role="alert">{{RegAnswerMsg}}</div>
                         </div>
                     </div>
-                    <div class="col-md-12"><br /></div>
-                
-                <button class="btn btn-primary" style="height: 40px; width: 250px; font-size: 20px;">Регистрация</button>
+
+                </div>
             </div>
-    </div>
-    </div>
+        </div>
     </div>
 </body>
 </html>

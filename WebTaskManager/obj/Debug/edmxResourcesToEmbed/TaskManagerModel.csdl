@@ -45,32 +45,17 @@
     <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="BirthDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="User" ToRole="Task" />
-    <NavigationProperty Name="LoseAuthorization" Relationship="DBTaskManagerModel.FK__LoseAutho__UserI__22AA2996" FromRole="User" ToRole="LoseAuthorization" />
-  </EntityType>
-  <EntityType Name="LoseAuthorization">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="LoseTime" />
-      <PropertyRef Name="LoseId" />
-    </Key>
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="LoseTime" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__LoseAutho__UserI__22AA2996" FromRole="LoseAuthorization" ToRole="User" />
-    <Property Name="LoseId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LoseAuth" Relationship="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" FromRole="User" ToRole="LoseAuth" />
+    <NavigationProperty Name="CoockieByLogin" Relationship="DBTaskManagerModel.FK__CoockieBy__Coock__72C60C4A" FromRole="User" ToRole="CoockieByLogin" />
   </EntityType>
   <EntityContainer Name="DBTaskManagerContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Category" EntityType="Self.Category" />
     <EntitySet Name="Priority" EntityType="Self.Priority" />
     <EntitySet Name="Task" EntityType="Self.Task" />
     <EntitySet Name="User" EntityType="Self.User" />
-    <EntitySet Name="LoseAuthorization" EntityType="Self.LoseAuthorization" />
     <AssociationSet Name="FK__Task__UserId__21B6055D" Association="DBTaskManagerModel.FK__Task__UserId__21B6055D">
       <End Role="User" EntitySet="User" />
       <End Role="Task" EntitySet="Task" />
-    </AssociationSet>
-    <AssociationSet Name="FK__LoseAutho__UserI__22AA2996" Association="DBTaskManagerModel.FK__LoseAutho__UserI__22AA2996">
-      <End Role="User" EntitySet="User" />
-      <End Role="LoseAuthorization" EntitySet="LoseAuthorization" />
     </AssociationSet>
     <AssociationSet Name="FK__Category__Catego__267ABA7A" Association="DBTaskManagerModel.FK__Category__Catego__267ABA7A">
       <End Role="Task" EntitySet="Task" />
@@ -79,6 +64,16 @@
     <AssociationSet Name="FK__Priority__Priori__25869641" Association="DBTaskManagerModel.FK__Priority__Priori__25869641">
       <End Role="Task" EntitySet="Task" />
       <End Role="Priority" EntitySet="Priority" />
+    </AssociationSet>
+    <EntitySet Name="LoseAuth" EntityType="DBTaskManagerModel.LoseAuth" />
+    <AssociationSet Name="FK__LoseAuth__UserId__49C3F6B7" Association="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7">
+      <End Role="User" EntitySet="User" />
+      <End Role="LoseAuth" EntitySet="LoseAuth" />
+    </AssociationSet>
+    <EntitySet Name="CoockieByLogin" EntityType="DBTaskManagerModel.CoockieByLogin" />
+    <AssociationSet Name="FK__CoockieBy__Coock__72C60C4A" Association="DBTaskManagerModel.FK__CoockieBy__Coock__72C60C4A">
+      <End Role="User" EntitySet="User" />
+      <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
     </AssociationSet>
   </EntityContainer>
   <Association Name="FK__Task__UserId__21B6055D">
@@ -89,18 +84,6 @@
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="Task">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__LoseAutho__UserI__22AA2996">
-    <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
-    <End Type="DBTaskManagerModel.LoseAuthorization" Role="LoseAuthorization" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="LoseAuthorization">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
@@ -126,6 +109,48 @@
       </Principal>
       <Dependent Role="Priority">
         <PropertyRef Name="PriorityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LoseAuth">
+    <Key>
+      <PropertyRef Name="LoseId" />
+    </Key>
+    <Property Name="LoseId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="LoseTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" FromRole="LoseAuth" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__LoseAuth__UserId__49C3F6B7">
+    <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
+    <End Type="DBTaskManagerModel.LoseAuth" Role="LoseAuth" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LoseAuth">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CoockieByLogin">
+    <Key>
+      <PropertyRef Name="CoockieId" />
+    </Key>
+    <Property Name="CoockieId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Coockie" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__CoockieBy__Coock__72C60C4A" FromRole="CoockieByLogin" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__CoockieBy__Coock__72C60C4A">
+    <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
+    <End Type="DBTaskManagerModel.CoockieByLogin" Role="CoockieByLogin" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CoockieByLogin">
+        <PropertyRef Name="CoockieId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

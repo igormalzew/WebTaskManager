@@ -29,6 +29,7 @@ namespace WebTaskManager
         public virtual DbSet<Priority> Priority { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<LoseAuthorization> LoseAuthorization { get; set; }
+        public virtual DbSet<LoseAuth> LoseAuth { get; set; }
+        public virtual DbSet<CoockieByLogin> CoockieByLogin { get; set; }
     }
 }
