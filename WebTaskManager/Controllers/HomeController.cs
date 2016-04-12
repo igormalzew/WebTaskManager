@@ -96,7 +96,7 @@ namespace WebTaskManager.Controllers
         public JsonResult AddNewUser(string birthDay, string email, string login, string name, string password)
         {
             var user = _userRepository.GetUserAuthorizationInfobyLogin(login);
-            if (user == null)
+            if (user != null)
             {
                 return new JsonResult
                 {
@@ -115,7 +115,7 @@ namespace WebTaskManager.Controllers
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new JsonResult
                 {
@@ -124,7 +124,6 @@ namespace WebTaskManager.Controllers
                 };
             }
 
-            return null;
         }
     }
 }

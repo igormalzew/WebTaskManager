@@ -27,14 +27,14 @@
     <Key>
       <PropertyRef Name="PriorityId" />
     </Key>
-    <Property Name="PriorityId" Type="int" Nullable="false" />
+    <Property Name="PriorityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PriorityName" Type="nvarchar" MaxLength="20" Nullable="false" />
   </EntityType>
   <EntityType Name="Task">
     <Key>
       <PropertyRef Name="TaskId" />
     </Key>
-    <Property Name="TaskId" Type="int" Nullable="false" />
+    <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="TaskName" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="PriorityId" Type="int" Nullable="false" />
@@ -48,15 +48,15 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
-    <Property Name="HashPassword" Type="varchar" MaxLength="128" Nullable="false" />
-    <Property Name="Salt" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="HashPassword" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="Salt" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="BirthDate" Type="date" />
   </EntityType>
-  <Association Name="FK__Category__Catego__267ABA7A">
+  <Association Name="FK__Category__Catego__1CBC4616">
     <End Role="Task" Type="Self.Task" Multiplicity="1" />
     <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -68,7 +68,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CoockieBy__Coock__72C60C4A">
+  <Association Name="FK__CoockieBy__Coock__2A164134">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="CoockieByLogin" Type="Self.CoockieByLogin" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -80,7 +80,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__LoseAuth__UserId__49C3F6B7">
+  <Association Name="FK__LoseAuth__UserId__29221CFB">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="LoseAuth" Type="Self.LoseAuth" Multiplicity="*" />
     <ReferentialConstraint>
@@ -92,7 +92,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Priority__Priori__25869641">
+  <Association Name="FK__Priority__Priori__208CD6FA">
     <End Role="Task" Type="Self.Task" Multiplicity="1" />
     <End Role="Priority" Type="Self.Priority" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -104,7 +104,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Task__UserId__21B6055D">
+  <Association Name="FK__Task__UserId__282DF8C2">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Task" Type="Self.Task" Multiplicity="*" />
     <ReferentialConstraint>
@@ -123,23 +123,23 @@
     <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Category__Catego__267ABA7A" Association="Self.FK__Category__Catego__267ABA7A">
+    <AssociationSet Name="FK__Category__Catego__1CBC4616" Association="Self.FK__Category__Catego__1CBC4616">
       <End Role="Task" EntitySet="Task" />
       <End Role="Category" EntitySet="Category" />
     </AssociationSet>
-    <AssociationSet Name="FK__CoockieBy__Coock__72C60C4A" Association="Self.FK__CoockieBy__Coock__72C60C4A">
+    <AssociationSet Name="FK__CoockieBy__Coock__2A164134" Association="Self.FK__CoockieBy__Coock__2A164134">
       <End Role="User" EntitySet="User" />
       <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
     </AssociationSet>
-    <AssociationSet Name="FK__LoseAuth__UserId__49C3F6B7" Association="Self.FK__LoseAuth__UserId__49C3F6B7">
+    <AssociationSet Name="FK__LoseAuth__UserId__29221CFB" Association="Self.FK__LoseAuth__UserId__29221CFB">
       <End Role="User" EntitySet="User" />
       <End Role="LoseAuth" EntitySet="LoseAuth" />
     </AssociationSet>
-    <AssociationSet Name="FK__Priority__Priori__25869641" Association="Self.FK__Priority__Priori__25869641">
+    <AssociationSet Name="FK__Priority__Priori__208CD6FA" Association="Self.FK__Priority__Priori__208CD6FA">
       <End Role="Task" EntitySet="Task" />
       <End Role="Priority" EntitySet="Priority" />
     </AssociationSet>
-    <AssociationSet Name="FK__Task__UserId__21B6055D" Association="Self.FK__Task__UserId__21B6055D">
+    <AssociationSet Name="FK__Task__UserId__282DF8C2" Association="Self.FK__Task__UserId__282DF8C2">
       <End Role="User" EntitySet="User" />
       <End Role="Task" EntitySet="Task" />
     </AssociationSet>

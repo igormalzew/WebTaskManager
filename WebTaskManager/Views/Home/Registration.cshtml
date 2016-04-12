@@ -87,7 +87,10 @@
                         </div>
                         <br/>
                         <div class="col-md-6 col-md-offset-3">
-                            <div class="alert {{IsError == true ? 'alert-danger' : 'alert-success'}} " ng_show="RegAnswerMsg !=''" role="alert">{{RegAnswerMsg}}</div>
+                            <div class="alert alert-success " ng_show="IsError == false && RegAnswerMsg !=''" role="alert">Регистрация прошла успешно. Теперь вы можете <a href=/Home/Index>авторизоваться</a></div>
+                        </div>
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="alert alert-danger " ng_show="IsError == true && RegAnswerMsg !=''" role="alert">{{RegAnswerMsg}}</div>
                         </div>
                     </div>
 
