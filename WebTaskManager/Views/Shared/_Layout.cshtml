@@ -13,14 +13,7 @@
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (ViewBag.IsAuthorized)
-                    {
-                        <li>@Html.ActionLink("На главную", "MainPage", "Home")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("На главную", "Index", "Home")</li>
-                    }
+                    <li>@Html.ActionLink("На главную", "MainPage", "Home")</li>
                     <li>@Html.ActionLink("О нас", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                 </ul>

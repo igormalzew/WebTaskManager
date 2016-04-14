@@ -18,6 +18,8 @@ AuthorizationApp.controller("Authorization", function ($scope, $http) {
                 if (data.IsError === true) {
                     $scope.IsError = true;
                     $scope.ErrorMessage = data.ErrorMessage;
+                } else {
+
                 }
             });
 

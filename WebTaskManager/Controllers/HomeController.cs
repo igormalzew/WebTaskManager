@@ -1,129 +1,112 @@
 ﻿using System;
 using System.Web.Mvc;
 using WebTaskManager.Filters;
-using WebTaskManager.Models.repository;
-using WebTaskManager.Repository;
+using WebTaskManager.Manager;
 
 namespace WebTaskManager.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly UserRepository _userRepository = new UserRepository();
+       
+       private readonly UserManager _userManager = new UserManager();
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
-            ViewBag.IsAuthorized = false;
-            return View();
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
+            {
+                ViewBag.IsAuthorized = false;
+                ViewBag.UserName = String.Empty;
+                return View();
+            }
+
+            ViewBag.IsAuthorized = true;
+            ViewBag.UserName = userName;
+            return RedirectToAction("MainPage", "home");
         }
 
-        [MyAuth]
+
         public ActionResult MainPage()
         {
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
+            {
+                ViewBag.IsAuthorized = false;
+                ViewBag.UserName = String.Empty;
+                return RedirectToAction("index", "home");
+            }
+
             ViewBag.IsAuthorized = true;
+            ViewBag.UserName = userName;
             return View();
         }
 
-        [AllowAnonymous]
         public ActionResult Registration()
         {
-            ViewBag.IsAuthorized = false;
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
+            {
+                ViewBag.IsAuthorized = false;
+                ViewBag.UserName = String.Empty;
+                return View();
+            }
+
+            ViewBag.IsAuthorized = true;
+            ViewBag.UserName = userName;
             return View();
         }
 
-        [MyAuth]
         public ActionResult LogOut()
         {
-            return Redirect("/Home/Index");
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
+            {
+                ViewBag.IsAuthorized = false;
+                ViewBag.UserName = String.Empty;
+                return RedirectToAction("index", "home");
+            }
+
+            _userManager.UserLogOut(System.Web.HttpContext.Current.Request.Cookies["id"].Value);
+
+            ViewBag.IsAuthorized = false;
+            ViewBag.UserName = String.Empty;
+            return RedirectToAction("index", "home");
         }
 
-        [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-
-            var userCoockie = HttpContext.Request.Cookies["id"];
-            if (userCoockie == null)
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
             {
                 ViewBag.IsAuthorized = false;
-            }
-            else
-            {
-                var coockie = _userRepository.GetCoockieRecord(userCoockie.Value);
-                if (coockie == null)
-                {
-                    ViewBag.IsAuthorized = false;
-                }
-                else
-                {
-                    ViewBag.Name = coockie.User.Name;
-                    ViewBag.IsAuthorized = true;
-                }
+                ViewBag.UserName = String.Empty;
+                return View();
             }
 
+            ViewBag.IsAuthorized = true;
+            ViewBag.UserName = userName;
             return View();
         }
 
-        [AllowAnonymous]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            var userCoockie = HttpContext.Request.Cookies["id"];
-            if (userCoockie == null)
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName == null)
             {
                 ViewBag.IsAuthorized = false;
-            }
-            else
-            {
-                var coockie = _userRepository.GetCoockieRecord(userCoockie.Value);
-                if (coockie == null)
-                {
-                    ViewBag.IsAuthorized = false;
-                }
-                else
-                {
-                    ViewBag.Name = coockie.User.Name;
-                    ViewBag.IsAuthorized = true;
-                }
+                ViewBag.UserName = String.Empty;
+                return View();
             }
 
+            ViewBag.IsAuthorized = true;
+            ViewBag.UserName = userName;
             return View();
         }
 
-        [AllowAnonymous]
         public JsonResult AddNewUser(string birthDay, string email, string login, string name, string password)
         {
-            var user = _userRepository.GetUserAuthorizationInfobyLogin(login);
-            if (user != null)
-            {
-                return new JsonResult
-                {
-                    Data = new ErrorResult { IsError = true, ErrorMessage = "Указанный логин занят" },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-            }
-            try
-            {
-                DateTime outDate;
-                DateTime.TryParse(birthDay, out outDate);
-                _userRepository.AddNewUser(name, login, password, email, outDate);
-                return new JsonResult
-                {
-                    Data = new ErrorResult { IsError = false, ErrorMessage = "Регистрация прошла успешно. Теперь вы можете <a href=\"~/Home/Index\">авторизоваться</a>" },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult
-                {
-                    Data = new ErrorResult { IsError = true, ErrorMessage = "Внутренняя ошибка сервера. Пожалуйста, повторите попытку." },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-            }
-
+            return _userManager.AddNewUser(birthDay, email, login, name, password);
         }
     }
 }

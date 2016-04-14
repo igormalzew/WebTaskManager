@@ -77,5 +77,14 @@ namespace WebTaskManager.Repository
             _model.User.Add(newUser);
             _model.SaveChanges();
         }
+
+        public void UserLogOut(string userCoockie)
+        {
+            var coockieDb = _model.CoockieByLogin.FirstOrDefault(c => c.Coockie == userCoockie);
+            if(coockieDb == null) return;
+
+            _model.CoockieByLogin.Remove(coockieDb);
+            _model.SaveChanges();
+        }
     }
 }

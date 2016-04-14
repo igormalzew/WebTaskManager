@@ -167,13 +167,14 @@
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Crypto\Crypto.cs" />
-    <Compile Include="Filters\MyAuthAttribute.cs" />
+    <Compile Include="Filters\AccessVerify.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LoseAuth.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\repository\AuthorizationUserInfo.cs" />
     <Compile Include="Models\repository\ErrorResult.cs" />
     <Compile Include="Priority.cs">
