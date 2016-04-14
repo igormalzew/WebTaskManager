@@ -70,6 +70,10 @@ RegistrationApp.controller("Registration", function ($scope, $http) {
             });
 
     }
+
+    $scope.IndexRedirect = function() {
+        window.location.replace("/");
+    }
 });
 
 

@@ -12,10 +12,10 @@
         <AssociationConnector Association="DBTaskManagerModel.FK__Task__UserId__21B6055D" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__267ABA7A" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Priority__Priori__25869641" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="7.875" PointY="4.125" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="8.25" PointY="4.5" />
         <AssociationConnector Association="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" />
         <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="9.75" PointY="1.125" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__CoockieBy__Coock__72C60C4A" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

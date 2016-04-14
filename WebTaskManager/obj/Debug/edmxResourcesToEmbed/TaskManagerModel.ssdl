@@ -11,15 +11,15 @@
     <Key>
       <PropertyRef Name="CoockieId" />
     </Key>
-    <Property Name="CoockieId" Type="int" Nullable="false" />
+    <Property Name="CoockieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="Coockie" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="Coockie" Type="varchar" MaxLength="300" Nullable="false" />
   </EntityType>
   <EntityType Name="LoseAuth">
     <Key>
       <PropertyRef Name="LoseId" />
     </Key>
-    <Property Name="LoseId" Type="int" Nullable="false" />
+    <Property Name="LoseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LoseTime" Type="datetime" Nullable="false" />
   </EntityType>
@@ -68,19 +68,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CoockieBy__Coock__2A164134">
+  <Association Name="FK__CoockieBy__UserI__4D5F7D71">
     <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="CoockieByLogin" Type="Self.CoockieByLogin" Multiplicity="0..1" />
+    <End Role="CoockieByLogin" Type="Self.CoockieByLogin" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="CoockieByLogin">
-        <PropertyRef Name="CoockieId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__LoseAuth__UserId__29221CFB">
+  <Association Name="FK__LoseAuth__UserId__625A9A57">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="LoseAuth" Type="Self.LoseAuth" Multiplicity="*" />
     <ReferentialConstraint>
@@ -127,11 +127,11 @@
       <End Role="Task" EntitySet="Task" />
       <End Role="Category" EntitySet="Category" />
     </AssociationSet>
-    <AssociationSet Name="FK__CoockieBy__Coock__2A164134" Association="Self.FK__CoockieBy__Coock__2A164134">
+    <AssociationSet Name="FK__CoockieBy__UserI__4D5F7D71" Association="Self.FK__CoockieBy__UserI__4D5F7D71">
       <End Role="User" EntitySet="User" />
       <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
     </AssociationSet>
-    <AssociationSet Name="FK__LoseAuth__UserId__29221CFB" Association="Self.FK__LoseAuth__UserId__29221CFB">
+    <AssociationSet Name="FK__LoseAuth__UserId__625A9A57" Association="Self.FK__LoseAuth__UserId__625A9A57">
       <End Role="User" EntitySet="User" />
       <End Role="LoseAuth" EntitySet="LoseAuth" />
     </AssociationSet>

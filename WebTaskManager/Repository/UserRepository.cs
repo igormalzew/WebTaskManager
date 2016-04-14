@@ -36,6 +36,7 @@ namespace WebTaskManager.Repository
         public void AddCoockieRecord(string login, string coockie)
         {
             var user = _model.User.FirstOrDefault(c => c.Login == login);
+            if(user == null) return;
 
             var record = new CoockieByLogin
             {

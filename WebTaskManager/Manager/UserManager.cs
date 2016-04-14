@@ -125,7 +125,6 @@ namespace WebTaskManager.Manager
                 };
             }
 
-            return null;
         }
     }
 }

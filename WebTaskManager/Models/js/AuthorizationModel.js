@@ -19,7 +19,7 @@ AuthorizationApp.controller("Authorization", function ($scope, $http) {
                     $scope.IsError = true;
                     $scope.ErrorMessage = data.ErrorMessage;
                 } else {
-
+                    window.location.replace("/");
                 }
             });
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using WebTaskManager.Manager;
 using WebTaskManager.Models.repository;
@@ -16,7 +17,18 @@ namespace WebTaskManager.Controllers
         {
             string setCoockie = String.Empty;
             var result = _userManager.UserLogin(login, userPassword, out setCoockie);
-            if(setCoockie != String.Empty && HttpContext.Request.Cookies["id"] != null) HttpContext.Request.Cookies["id"].Value = setCoockie;
+            if (setCoockie != String.Empty)
+            {
+                if (HttpContext.Response.Cookies["id"] == null)
+                {
+                    HttpContext.Response.Cookies.Add(new HttpCookie("id", setCoockie));
+                }
+                else
+                {
+                    HttpContext.Response.Cookies["id"].Value = setCoockie;
+                }
+            }
+
             return result;
         }
     }
