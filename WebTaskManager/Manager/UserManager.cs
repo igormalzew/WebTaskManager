@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebTaskManager.Models.repository;
@@ -119,12 +120,27 @@ namespace WebTaskManager.Manager
                     {
                         IsError = true,
                         ErrorMessage = LOSE_COUNT - loseCount - 1 > 0 ?
-                    String.Format("Пароль введен неверно. Осталось {0} попытка", LOSE_COUNT - loseCount - 1) :
+                    String.Format("Пароль введен неверно. Осталось {0} попытк{1}", LOSE_COUNT - loseCount - 1, LOSE_COUNT - loseCount - 1 == 1 ? "а" : "и") :
                     "Доступ к учетной записи заблокирован на 1 час"
                     },JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
 
+        }
+
+        public JsonResult GetTasks(int userId, DateTime startDate, DateTime endDate, bool completeShow)
+        {
+            var tasks = _userRepository.GetTasks(userId ,startDate, endDate, Convert.ToInt32(completeShow));
+
+
+            return new JsonResult
+            {
+                Data = new 
+                {
+                    tasks
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
     }
 }

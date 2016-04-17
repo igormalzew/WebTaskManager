@@ -218,7 +218,6 @@
     <Content Include="Content\images\mainImage.jpg" />
     <Content Include="Content\images\stock-photo-131180433.jpg" />
     <Content Include="Content\ng-table.min.css" />
-    <Content Include="Content\slider.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

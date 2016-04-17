@@ -41,12 +41,12 @@
           </Key>
           <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="TaskName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="PriorityId" Type="int" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
           <Property Name="SetDate" Type="date" Nullable="false" />
-          <Property Name="IsPerformance" Type="int" />
+          <Property Name="IsPerformance" Type="int" Nullable="false" />
           <Property Name="SpentTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="User">
@@ -175,12 +175,12 @@
           </Key>
           <Property Name="TaskId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="TaskName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TaskName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PriorityId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="FullDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="SetDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IsPerformance" Type="Int32" />
+          <Property Name="IsPerformance" Type="Int32" Nullable="false" />
           <Property Name="SpentTime" Type="Time" Precision="7" />
           <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="Task" ToRole="User" />
           <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Task" ToRole="Category" />

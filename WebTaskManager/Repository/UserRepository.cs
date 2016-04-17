@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Web.UI.WebControls;
 using WebTaskManager.Models.repository;
 
 namespace WebTaskManager.Repository
@@ -36,7 +39,7 @@ namespace WebTaskManager.Repository
         public void AddCoockieRecord(string login, string coockie)
         {
             var user = _model.User.FirstOrDefault(c => c.Login == login);
-            if(user == null) return;
+            if (user == null) return;
 
             var record = new CoockieByLogin
             {
@@ -82,10 +85,20 @@ namespace WebTaskManager.Repository
         public void UserLogOut(string userCoockie)
         {
             var coockieDb = _model.CoockieByLogin.FirstOrDefault(c => c.Coockie == userCoockie);
-            if(coockieDb == null) return;
+            if (coockieDb == null) return;
 
             _model.CoockieByLogin.Remove(coockieDb);
             _model.SaveChanges();
+        }
+
+        public List<Task> GetTasks(int userId, DateTime? startDate, DateTime? endDate, int isPerformance)
+        {
+            var tasks = from t in _model.Task
+                where t.UserId == userId && (startDate == null || t.SetDate >= startDate) &&
+                      (endDate == null || t.SetDate <= endDate) && t.IsPerformance == isPerformance
+                select t;
+
+            return tasks.ToList();
         }
     }
 }

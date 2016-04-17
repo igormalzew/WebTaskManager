@@ -15,5 +15,16 @@ namespace WebTaskManager.Filters
 
             return userInfo?.User?.Name;
         }
+
+        public static int? GetUserIdAuthorizedUser(HttpContext httpContext)
+        {
+            if (httpContext.Request.Cookies["id"] == null) return null;
+
+            var userCoockie = httpContext.Request.Cookies["id"].Value;
+            var userInfo = UserManager.GetCoockieRecord(userCoockie);
+
+            return userInfo?.User?.UserId;
+        }
+        
     }
 }

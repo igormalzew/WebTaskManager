@@ -36,12 +36,12 @@
     </Key>
     <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="TaskName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="TaskName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="PriorityId" Type="int" Nullable="false" />
     <Property Name="CategoryId" Type="int" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
     <Property Name="SetDate" Type="date" Nullable="false" />
-    <Property Name="IsPerformance" Type="int" />
+    <Property Name="IsPerformance" Type="int" Nullable="false" />
     <Property Name="SpentTime" Type="time" Precision="7" />
   </EntityType>
   <EntityType Name="User">

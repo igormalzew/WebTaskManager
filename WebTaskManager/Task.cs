@@ -21,7 +21,7 @@ namespace WebTaskManager
         public Nullable<int> CategoryId { get; set; }
         public string FullDescription { get; set; }
         public System.DateTime SetDate { get; set; }
-        public Nullable<int> IsPerformance { get; set; }
+        public int IsPerformance { get; set; }
         public Nullable<System.TimeSpan> SpentTime { get; set; }
     
         public virtual User User { get; set; }
