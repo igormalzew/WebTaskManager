@@ -28,10 +28,10 @@
     <Property Name="FullDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="SetDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="IsPerformance" Type="Int32" Nullable="false" />
-    <Property Name="SpentTime" Type="Time" Precision="7" />
     <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="Task" ToRole="User" />
     <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Task" ToRole="Category" />
     <NavigationProperty Name="Priority" Relationship="DBTaskManagerModel.FK__Priority__Priori__25869641" FromRole="Task" ToRole="Priority" />
+    <Property Name="SpendTime" Type="Time" Precision="7" />
   </EntityType>
   <EntityType Name="User">
     <Key>

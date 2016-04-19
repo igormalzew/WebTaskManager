@@ -22,7 +22,7 @@ namespace WebTaskManager
         public string FullDescription { get; set; }
         public System.DateTime SetDate { get; set; }
         public int IsPerformance { get; set; }
-        public Nullable<System.TimeSpan> SpentTime { get; set; }
+        public Nullable<System.TimeSpan> SpendTime { get; set; }
     
         public virtual User User { get; set; }
         public virtual Category Category { get; set; }

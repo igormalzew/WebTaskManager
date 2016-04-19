@@ -9,22 +9,31 @@
 };
 var CategoryArray = [];
 
+var taskArray = [{ taskName: "awd", setDate: "awd", spendTime: "awda", isPerformance: true },
+                       { name: "a sdcsdcwd", date: "awd", spendTime: "awda", isPerformance: false }];
+
 var TaskApp = angular.module("TaskApp", ["ngTable"]);
 
 TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
-    var taskArray = [{ name: "awd", date: "awd", spendTime: "awda", isPerformance: true },
-                        { name: "a sdcsdcwd", date: "awd", spendTime: "awda", isPerformance: false }];
 
-    this.tableParams = new NgTableParams({}, { dataset: taskArray });
+    var self = this;
 
+    function getParams() {
+        return new NgTableParams({}, {
+            getData: function ($defer, params) {
+                $http.get('GetTasks').success(function (data) {
+                    $defer.resolve(data);
+                });
+
+            }
+        });
+    }
+
+    self.tableParams = getParams();
 
     $scope.btnGetTasks = function () {
-        $http({
-            method: 'GET', url: 'GetTasks'
-        }).
-           success(function (data) {
-               $scope.taskArray = data.Data;
-           });
+        alert();
+        self.tableParams = getParams();
     }
 });
 

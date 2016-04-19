@@ -42,7 +42,7 @@
     <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
     <Property Name="SetDate" Type="date" Nullable="false" />
     <Property Name="IsPerformance" Type="int" Nullable="false" />
-    <Property Name="SpentTime" Type="time" Precision="7" />
+    <Property Name="SpendTime" Type="time" Precision="7" />
   </EntityType>
   <EntityType Name="User">
     <Key>

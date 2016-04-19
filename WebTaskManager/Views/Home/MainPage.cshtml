@@ -134,12 +134,12 @@
                     </div>
                     <div class="panel-body">
                         <table  ng-table="vm.tableParams" class="table table-bordered table-hover">
-                            <tr ng-repeat="user in $data" style="height: 30px; position: relative">
+                            <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
                                 <td style="width: 1%">
                                     <span class="bl-mark" style="background-color: red"></span>
                                 </td>
                                 <td title="'Наименование'" sortable="'name'" style="width: 44%">
-                                    {{user.name}}
+                                    {{user.TaskName}}
                                 </td>
                                 <td style="width: 3%">
                                     <a class="btn btn-default pull-right row-info-sign btn-mini">
@@ -147,13 +147,13 @@
                                     </a>
                                 </td>
                                 <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
-                                    {{user.date}}
+                                    {{user.SetDate}}
                                 </td>
                                 <td title="'Затраты'" style="width: 20%; text-align: center">
-                                    {{user.spendTime}}
+                                    {{user.SpendTime}}
                                 </td>
                                 <td title="'Выполнено'" style="width: 10%; text-align: center">
-                                    <span class="glyphicon {{user.isPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
+                                    <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
                                 </td>
                             </tr>
                         </table>

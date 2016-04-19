@@ -130,15 +130,24 @@ namespace WebTaskManager.Manager
 
         public JsonResult GetTasks(int userId, DateTime startDate, DateTime endDate, bool completeShow)
         {
-            var tasks = _userRepository.GetTasks(userId ,startDate, endDate, Convert.ToInt32(completeShow));
+            var tasks = _userRepository.GetTasks(userId ,null, null, Convert.ToInt32(completeShow));
 
+            var result = tasks.Select(c => new
+            {
+                c.TaskId,
+                c.TaskName,
+                c.FullDescription,
+                c.CategoryId,
+                c.IsPerformance,
+                c.PriorityId,
+                SetDate = c.SetDate.ToString("dd.MM.yyyy"),
+                c.SpendTime
+
+            }).ToArray();
 
             return new JsonResult
             {
-                Data = new 
-                {
-                    tasks
-                },
+                Data = result,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }

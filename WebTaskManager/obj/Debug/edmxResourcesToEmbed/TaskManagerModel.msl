@@ -20,6 +20,7 @@
     <EntitySetMapping Name="Task">
       <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Task)">
         <MappingFragment StoreEntitySet="Task">
+          <ScalarProperty Name="SpendTime" ColumnName="SpendTime" />
           <ScalarProperty Name="TaskId" ColumnName="TaskId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TaskName" ColumnName="TaskName" />
@@ -28,7 +29,6 @@
           <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
           <ScalarProperty Name="SetDate" ColumnName="SetDate" />
           <ScalarProperty Name="IsPerformance" ColumnName="IsPerformance" />
-          <ScalarProperty Name="SpentTime" ColumnName="SpentTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -47,7 +47,7 @@
           <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
           <Property Name="SetDate" Type="date" Nullable="false" />
           <Property Name="IsPerformance" Type="int" Nullable="false" />
-          <Property Name="SpentTime" Type="time" Precision="7" />
+          <Property Name="SpendTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -181,10 +181,10 @@
           <Property Name="FullDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="SetDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsPerformance" Type="Int32" Nullable="false" />
-          <Property Name="SpentTime" Type="Time" Precision="7" />
           <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="Task" ToRole="User" />
           <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Task" ToRole="Category" />
           <NavigationProperty Name="Priority" Relationship="DBTaskManagerModel.FK__Priority__Priori__25869641" FromRole="Task" ToRole="Priority" />
+          <Property Name="SpendTime" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -332,7 +332,8 @@
     <EntitySetMapping Name="Task">
       <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Task)">
         <MappingFragment StoreEntitySet="Task">
-          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="SpendTime" ColumnName="SpendTime" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TaskName" ColumnName="TaskName" />
           <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
@@ -340,7 +341,6 @@
           <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
           <ScalarProperty Name="SetDate" ColumnName="SetDate" />
           <ScalarProperty Name="IsPerformance" ColumnName="IsPerformance" />
-          <ScalarProperty Name="SpentTime" ColumnName="SpentTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
