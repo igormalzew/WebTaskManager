@@ -12,28 +12,20 @@ namespace WebTaskManager
     using System;
     using System.Collections.Generic;
     
-    public partial class Task
+    public partial class CategoryType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Task()
+        public CategoryType()
         {
-            this.Category1 = new HashSet<Category>();
+            this.Category = new HashSet<Category>();
         }
     
-        public int TaskId { get; set; }
+        public int CategoryTypeId { get; set; }
+        public string CategoryName { get; set; }
         public int UserId { get; set; }
-        public string TaskName { get; set; }
-        public int PriorityId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-        public string FullDescription { get; set; }
-        public System.DateTime SetDate { get; set; }
-        public int IsPerformance { get; set; }
-        public Nullable<System.TimeSpan> SpendTime { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual Priority Priority { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Category1 { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace WebTaskManager
             this.Task = new HashSet<Task>();
             this.LoseAuth = new HashSet<LoseAuth>();
             this.CoockieByLogin1 = new HashSet<CoockieByLogin>();
+            this.CategoryType = new HashSet<CategoryType>();
         }
     
         public int UserId { get; set; }
@@ -36,5 +37,7 @@ namespace WebTaskManager
         public virtual ICollection<LoseAuth> LoseAuth { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CoockieByLogin> CoockieByLogin1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CategoryType> CategoryType { get; set; }
     }
 }

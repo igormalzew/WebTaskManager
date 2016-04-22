@@ -60,7 +60,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <label style="font-weight: normal; cursor: pointer;">
-                                <input type="checkbox"> Показать выполненные
+                                <input id="isPerformanceFilter" type="checkbox"> Показать выполненные
                             </label>
                         </h3>
                     </div>
@@ -73,16 +73,16 @@
                     </div>
                     <div class="panel-body">
                         <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Выделить все
+                            <input ng-model="PriorityMain" ng-click="PriorityAllSelect()" type="checkbox"> Выделить все
                         </label><br />
                         <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Высокий
+                            <input id="1" class="PriorityFilter" type="checkbox"> Высокий
                         </label><br/>
                         <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Средний
+                            <input id="2" class="PriorityFilter" type="checkbox"> Средний
                         </label><br/>
                         <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Низкий
+                            <input id="3" class="PriorityFilter" type="checkbox"> Низкий
                         </label>
                     </div>
                 </div>
@@ -99,20 +99,24 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Выделить все
-                        </label><br />
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Высокий
-                        </label><br/>
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Средний
-                        </label><br/>
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox"> Низкий
-                        </label>
+                        <div>
+                            <label style="font-weight: normal; cursor: pointer;">
+                                <input ng-model="CategoryMain" ng-click="CategoryAllSelect()" type="checkbox"> Выделить все
+                            </label><br />
+                        </div>
+                        <div ng-repeat="category in CategoryArray">
+                            <label style="font-weight: normal; cursor: pointer;">
+                                <input id="{{category.CategoryTypeId}}" class="CategoryFilter" type="checkbox"> {{category.CategoryName}}
+                            </label>
+                            <br />
+                        </div>
                     </div>
                 </div>
+
+                <script>
+                    $('.PriorityFilter').prop("checked", true);
+                    $('.CategoryFilter').prop("checked", true);
+                </script>
 
                 <div class="col-md-12">
                     <div style="text-align: center">
@@ -133,30 +137,38 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <table  ng-table="vm.tableParams" class="table table-bordered table-hover">
-                            <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
-                                <td style="width: 1%">
-                                    <span class="bl-mark" style="background-color: red"></span>
-                                </td>
-                                <td title="'Наименование'" sortable="'name'" style="width: 44%">
-                                    {{user.TaskName}}
-                                </td>
-                                <td style="width: 3%">
-                                    <a class="btn btn-default pull-right row-info-sign btn-mini">
-                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                                <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
-                                    {{user.SetDate}}
-                                </td>
-                                <td title="'Затраты'" style="width: 20%; text-align: center">
-                                    {{user.SpendTime}}
-                                </td>
-                                <td title="'Выполнено'" style="width: 10%; text-align: center">
-                                    <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
-                                </td>
-                            </tr>
-                        </table>
+                        <div ng-show="vm.tableParams.data.length != 0">
+                            <table ng-table="vm.tableParams" class="table table-bordered table-hover">
+                                <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
+                                    <td style="width: 1%">
+                                        <span class="bl-mark" style="background-color: red"></span>
+                                    </td>
+                                    <td title="'Наименование'" sortable="'name'" style="width: 44%">
+                                        {{user.TaskName}}
+                                    </td>
+                                    <td style="width: 3%">
+                                        <a class="btn btn-default pull-right row-info-sign btn-mini">
+                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
+                                        {{user.SetDate}}
+                                    </td>
+                                    <td title="'Затраты'" style="width: 20%; text-align: center">
+                                        {{user.SpendTime}}
+                                    </td>
+                                    <td title="'Выполнено'" style="width: 10%; text-align: center">
+                                        <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-show="vm.tableParams.data.length == 0" style="background-color: rgba(217, 237, 247, 0.3); border-radius: 10px; height: 160px; text-align: center;">
+                            <div style="display: inline-block; vertical-align: middle;  height: 120px;">
+                                <h1 class="minimaze-hidden" style="font-family: PlayfairDisplay-Italic;"><span class="glyphicon glyphicon-search"></span>Задач не найдено.</h1>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>

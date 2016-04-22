@@ -9,8 +9,17 @@
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="CategoryName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryTypeId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryType">
+          <Key>
+            <PropertyRef Name="CategoryTypeId" />
+          </Key>
+          <Property Name="CategoryTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CoockieByLogin">
           <Key>
@@ -61,15 +70,39 @@
           <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
         </EntityType>
-        <Association Name="FK__Category__Catego__1CBC4616">
+        <Association Name="FK__Category__Catego__7D0E9093">
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryType">
+              <PropertyRef Name="CategoryTypeId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="CategoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category__TaskId__7C1A6C5A">
           <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Task">
               <PropertyRef Name="TaskId" />
             </Principal>
             <Dependent Role="Category">
-              <PropertyRef Name="CategoryId" />
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CategoryT__UserI__7755B73D">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CategoryType">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -123,14 +156,23 @@
         </Association>
         <EntityContainer Name="DBTaskManagerModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryType" EntityType="Self.CategoryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CoockieByLogin" EntityType="Self.CoockieByLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoseAuth" EntityType="Self.LoseAuth" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Category__Catego__1CBC4616" Association="Self.FK__Category__Catego__1CBC4616">
+          <AssociationSet Name="FK__Category__Catego__7D0E9093" Association="Self.FK__Category__Catego__7D0E9093">
+            <End Role="CategoryType" EntitySet="CategoryType" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__TaskId__7C1A6C5A" Association="Self.FK__Category__TaskId__7C1A6C5A">
             <End Role="Task" EntitySet="Task" />
             <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CategoryT__UserI__7755B73D" Association="Self.FK__CategoryT__UserI__7755B73D">
+            <End Role="User" EntitySet="User" />
+            <End Role="CategoryType" EntitySet="CategoryType" />
           </AssociationSet>
           <AssociationSet Name="FK__CoockieBy__UserI__4D5F7D71" Association="Self.FK__CoockieBy__UserI__4D5F7D71">
             <End Role="User" EntitySet="User" />
@@ -158,8 +200,11 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Category" ToRole="Task" />
+          <Property Name="CategoryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CategoryType" Relationship="DBTaskManagerModel.FK__Category__Catego__7D0E9093" FromRole="Category" ToRole="CategoryType" />
+          <NavigationProperty Name="Task1" Relationship="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A" FromRole="Category" ToRole="Task" />
         </EntityType>
         <EntityType Name="Priority">
           <Key>
@@ -185,6 +230,7 @@
           <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Task" ToRole="Category" />
           <NavigationProperty Name="Priority" Relationship="DBTaskManagerModel.FK__Priority__Priori__25869641" FromRole="Task" ToRole="Priority" />
           <Property Name="SpendTime" Type="Time" Precision="7" />
+          <NavigationProperty Name="Category1" Relationship="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A" FromRole="Task" ToRole="Category" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -200,6 +246,7 @@
           <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="User" ToRole="Task" />
           <NavigationProperty Name="LoseAuth" Relationship="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" FromRole="User" ToRole="LoseAuth" />
           <NavigationProperty Name="CoockieByLogin1" Relationship="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" FromRole="User" ToRole="CoockieByLogin" />
+          <NavigationProperty Name="CategoryType" Relationship="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" FromRole="User" ToRole="CategoryType" />
         </EntityType>
         <EntityContainer Name="DBTaskManagerContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
@@ -227,6 +274,19 @@
           <AssociationSet Name="FK__CoockieBy__UserI__4D5F7D71" Association="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71">
             <End Role="User" EntitySet="User" />
             <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
+          </AssociationSet>
+          <EntitySet Name="CategoryType" EntityType="DBTaskManagerModel.CategoryType" />
+          <AssociationSet Name="FK__Category__Catego__7D0E9093" Association="DBTaskManagerModel.FK__Category__Catego__7D0E9093">
+            <End Role="CategoryType" EntitySet="CategoryType" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__TaskId__7C1A6C5A" Association="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CategoryT__UserI__7755B73D" Association="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D">
+            <End Role="User" EntitySet="User" />
+            <End Role="CategoryType" EntitySet="CategoryType" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Task__UserId__21B6055D">
@@ -307,6 +367,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CategoryType">
+          <Key>
+            <PropertyRef Name="CategoryTypeId" />
+          </Key>
+          <Property Name="CategoryTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__7D0E9093" FromRole="CategoryType" ToRole="Category" />
+          <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" FromRole="CategoryType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Category__Catego__7D0E9093">
+          <End Type="DBTaskManagerModel.CategoryType" Role="CategoryType" Multiplicity="1" />
+          <End Type="DBTaskManagerModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryType">
+              <PropertyRef Name="CategoryTypeId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="CategoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category__TaskId__7C1A6C5A">
+          <End Type="DBTaskManagerModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="DBTaskManagerModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CategoryT__UserI__7755B73D">
+          <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBTaskManagerModel.CategoryType" Role="CategoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CategoryType">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -316,8 +422,9 @@
     <EntitySetMapping Name="Category">
       <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Category)">
         <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -372,6 +479,15 @@
                 <ScalarProperty Name="Coockie" ColumnName="Coockie" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryType">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.CategoryType">
+              <MappingFragment StoreEntitySet="CategoryType">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

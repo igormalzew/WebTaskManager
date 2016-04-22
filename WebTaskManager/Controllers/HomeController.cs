@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using WebTaskManager.Filters;
 using WebTaskManager.Manager;
+using WebTaskManager.Models.repository;
 
 namespace WebTaskManager.Controllers
 {
@@ -109,7 +110,7 @@ namespace WebTaskManager.Controllers
             return _userManager.AddNewUser(birthDay, email, login, name, password);
         }
 
-        public JsonResult GetTasks()
+        public JsonResult GetTasks(string filter)
         {
             var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
             if (userName != null)
@@ -118,7 +119,21 @@ namespace WebTaskManager.Controllers
                 if (userId == null) return null;
 
 
-                return _userManager.GetTasks(Convert.ToInt32(userId), DateTime.Now, DateTime.Now, true);
+                return _userManager.GetTasks(Convert.ToInt32(userId), filter);
+            }
+            return null;
+        }
+
+        public JsonResult GetCategory()
+        {
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName != null)
+            {
+                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
+                if (userId == null) return null;
+
+
+                return _userManager.GetCategory(Convert.ToInt32(userId));
             }
             return null;
         }

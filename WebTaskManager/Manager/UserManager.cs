@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using WebTaskManager.Models.repository;
 using WebTaskManager.Repository;
 
@@ -128,9 +131,24 @@ namespace WebTaskManager.Manager
 
         }
 
-        public JsonResult GetTasks(int userId, DateTime startDate, DateTime endDate, bool completeShow)
+        public JsonResult GetTasks(int userId, string filter)
         {
-            var tasks = _userRepository.GetTasks(userId ,null, null, Convert.ToInt32(completeShow));
+            var inputFilter = JsonConvert.DeserializeObject<UserFilter>(filter);
+
+            List<Task> tasks;
+            if (inputFilter != null)
+            {
+                DateTime start;
+                DateTime end;
+                DateTime.TryParse(inputFilter.StartDate, out start);
+                DateTime.TryParse(inputFilter.StartDate, out end);
+                tasks = _userRepository.GetTasks(userId, inputFilter.PriorityFilter, inputFilter.CategoryFilter,
+                    start, end, Convert.ToInt32(inputFilter.IsPerformanceFilter));
+            }
+            else
+            {
+                tasks = _userRepository.GetAllTasks(userId);
+            }
 
             var result = tasks.Select(c => new
             {
@@ -142,6 +160,24 @@ namespace WebTaskManager.Manager
                 c.PriorityId,
                 SetDate = c.SetDate.ToString("dd.MM.yyyy"),
                 c.SpendTime
+
+            }).ToArray();
+
+            return new JsonResult
+            {
+                Data = result,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetCategory(int userId)
+        {
+            var categoryTypes = _userRepository.GetCategory(userId);
+
+            var result = categoryTypes.Select(c => new
+            {
+                c.CategoryTypeId,
+                c.CategoryName
 
             }).ToArray();
 

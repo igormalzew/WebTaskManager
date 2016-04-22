@@ -31,5 +31,6 @@ namespace WebTaskManager
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<LoseAuth> LoseAuth { get; set; }
         public virtual DbSet<CoockieByLogin> CoockieByLogin { get; set; }
+        public virtual DbSet<CategoryType> CategoryType { get; set; }
     }
 }

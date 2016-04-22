@@ -4,8 +4,9 @@
     <EntitySetMapping Name="Category">
       <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Category)">
         <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -60,6 +61,15 @@
           <ScalarProperty Name="Coockie" ColumnName="Coockie" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryType">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.CategoryType">
+        <MappingFragment StoreEntitySet="CategoryType">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

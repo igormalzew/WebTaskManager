@@ -161,6 +161,9 @@
     <Compile Include="Category.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CategoryType.cs">
+      <DependentUpon>TaskManagerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CoockieByLogin.cs">
@@ -177,6 +180,7 @@
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\repository\AuthorizationUserInfo.cs" />
     <Compile Include="Models\repository\ErrorResult.cs" />
+    <Compile Include="Models\repository\UserFilter.cs" />
     <Compile Include="Priority.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>

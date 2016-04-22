@@ -91,14 +91,38 @@ namespace WebTaskManager.Repository
             _model.SaveChanges();
         }
 
-        public List<Task> GetTasks(int userId, DateTime? startDate, DateTime? endDate, int isPerformance)
+        public List<Task> GetTasks(int userId, int[] priorityFilter, int[] categoryFilter, DateTime startDate, DateTime endDate, int isPerformanceFilter)
         {
             var tasks = from t in _model.Task
-                where t.UserId == userId && (startDate == null || t.SetDate >= startDate) &&
-                      (endDate == null || t.SetDate <= endDate) && t.IsPerformance == isPerformance
-                select t;
+                join c in _model.Category on t.TaskId equals c.TaskId
+                where t.UserId == userId && t.SetDate >= startDate &&
+                      t.SetDate <= endDate && (isPerformanceFilter == 1 || t.IsPerformance != isPerformanceFilter) &&
+                      priorityFilter.Contains(t.PriorityId) && (t.CategoryId == null || categoryFilter.Contains(c.CategoryId))
+                        select t;
 
             return tasks.ToList();
+        }
+
+        public List<Task> GetAllTasks(int userId)
+        {
+            var today = DateTime.Now;
+
+            var tasks = from t in _model.Task
+                        join c in _model.Category on t.TaskId equals c.TaskId
+                        where t.UserId == userId && t.SetDate >= today &&
+                              t.SetDate <= today
+                        select t;
+
+            return tasks.ToList();
+        }
+
+        public IQueryable<CategoryType> GetCategory(int userId)
+        {
+            var categoryTypes = from c in _model.CategoryType
+                        where c.UserId == userId
+                        select c;
+
+            return categoryTypes;
         }
     }
 }

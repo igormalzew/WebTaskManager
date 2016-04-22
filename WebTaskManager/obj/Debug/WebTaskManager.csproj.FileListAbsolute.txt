@@ -50,8 +50,8 @@ D:\projects\WebTaskManager\WebTaskManager\bin\Antlr3.Runtime.pdb
 D:\projects\WebTaskManager\WebTaskManager\bin\Newtonsoft.Json.xml
 D:\projects\WebTaskManager\WebTaskManager\obj\Debug\WebTaskManager.dll
 D:\projects\WebTaskManager\WebTaskManager\obj\Debug\WebTaskManager.pdb
-D:\projects\WebTaskManager\WebTaskManager\obj\Debug\WebTaskManager.csprojResolveAssemblyReference.cache
 D:\projects\WebTaskManager\WebTaskManager\bin\EntityFramework.dll
 D:\projects\WebTaskManager\WebTaskManager\bin\EntityFramework.SqlServer.dll
 D:\projects\WebTaskManager\WebTaskManager\bin\EntityFramework.xml
 D:\projects\WebTaskManager\WebTaskManager\bin\EntityFramework.SqlServer.xml
+D:\projects\WebTaskManager\WebTaskManager\obj\Debug\WebTaskManager.csprojResolveAssemblyReference.cache
