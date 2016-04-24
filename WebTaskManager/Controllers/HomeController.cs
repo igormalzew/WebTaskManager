@@ -137,5 +137,33 @@ namespace WebTaskManager.Controllers
             }
             return null;
         }
+
+        public JsonResult AddCategory(string category)
+        {
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName != null)
+            {
+                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
+                if (userId == null) return null;
+
+
+                return _userManager.AddCategory(Convert.ToInt32(userId), category);
+            }
+            return null;
+        }
+
+        public JsonResult RemoveCategory(string category)
+        {
+            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
+            if (userName != null)
+            {
+                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
+                if (userId == null) return null;
+
+
+                return _userManager.RemoveCategory(Convert.ToInt32(userId), category);
+            }
+            return null;
+        }
     }
 }

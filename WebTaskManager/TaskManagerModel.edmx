@@ -70,8 +70,10 @@
           <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
         </EntityType>
-        <Association Name="FK__Category__Catego__7D0E9093">
-          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
+        <Association Name="FK__Category__Catego__0697FACD">
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CategoryType">
@@ -82,8 +84,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Category__TaskId__7C1A6C5A">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+        <Association Name="FK__Category__TaskId__19AACF41">
+          <End Role="Task" Type="Self.Task" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Task">
@@ -162,11 +166,11 @@
           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Category__Catego__7D0E9093" Association="Self.FK__Category__Catego__7D0E9093">
+          <AssociationSet Name="FK__Category__Catego__0697FACD" Association="Self.FK__Category__Catego__0697FACD">
             <End Role="CategoryType" EntitySet="CategoryType" />
             <End Role="Category" EntitySet="Category" />
           </AssociationSet>
-          <AssociationSet Name="FK__Category__TaskId__7C1A6C5A" Association="Self.FK__Category__TaskId__7C1A6C5A">
+          <AssociationSet Name="FK__Category__TaskId__19AACF41" Association="Self.FK__Category__TaskId__19AACF41">
             <End Role="Task" EntitySet="Task" />
             <End Role="Category" EntitySet="Category" />
           </AssociationSet>

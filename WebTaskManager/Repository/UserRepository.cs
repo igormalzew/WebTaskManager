@@ -93,11 +93,14 @@ namespace WebTaskManager.Repository
 
         public List<Task> GetTasks(int userId, int[] priorityFilter, int[] categoryFilter, DateTime startDate, DateTime endDate, int isPerformanceFilter)
         {
+            var isCaregoryArrEmpty = categoryFilter.Length == 0;
+
             var tasks = from t in _model.Task
                 join c in _model.Category on t.TaskId equals c.TaskId
                 where t.UserId == userId && t.SetDate >= startDate &&
                       t.SetDate <= endDate && (isPerformanceFilter == 1 || t.IsPerformance != isPerformanceFilter) &&
-                      priorityFilter.Contains(t.PriorityId) && (t.CategoryId == null || categoryFilter.Contains(c.CategoryId))
+                      priorityFilter.Contains(t.PriorityId) && ((isCaregoryArrEmpty && t.CategoryId == null) ||
+                                                                    (t.CategoryId != null && categoryFilter.Contains(c.CategoryId)))
                         select t;
 
             return tasks.ToList();
@@ -123,6 +126,27 @@ namespace WebTaskManager.Repository
                         select c;
 
             return categoryTypes;
+        }
+
+        public void AddCategory(int userId, string nameCategory)
+        {
+            var category = new CategoryType()
+            {
+                CategoryName = nameCategory,
+                UserId = userId
+            };
+
+            _model.CategoryType.Add(category);
+            _model.SaveChanges();
+        }
+
+        public void RemoveCategory(int userId, int categoryId)
+        {
+            var category = _model.CategoryType.FirstOrDefault(c => c.UserId == userId && c.CategoryTypeId == categoryId);
+            if(category == null) return;
+            
+            _model.CategoryType.Remove(category);
+            _model.SaveChanges();
         }
     }
 }

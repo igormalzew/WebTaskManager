@@ -16,15 +16,18 @@
     <script src="~/Scripts/moment-with-locales.js"></script>
     <script>moment.locale('ru')</script>
     <script src="~/Scripts/daterangepicker.js"></script>
-    <link rel="stylesheet" href="~/Content/slider.css">
+
+    <link rel="stylesheet" href="~/Content/bootstrap-switch.css">
+    <script src="~/Scripts/bootstrap-switch.js"></script>
+
 </head>
 <body ng-controller="TaskController as vm" class="image-screen" style="background: url(/Content/images/2560x16011.jpg) no-repeat center center fixed;">
 <br/><br/><br/><br/>
-    <div class="jumbotron col-md-8 col-md-offset-2" style="background-color: rgba(217, 237, 247, 0.5); border-radius: 10px; border-color: rgb(255, 255, 255); border-style: solid; border-width: 1px ">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
-                <input id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
-                <span class="input-group-btn" style="height: inherit">
+<div class="jumbotron col-md-8 col-md-offset-2" style="background-color: rgba(217, 237, 247, 0.5); border-radius: 10px; border-color: rgb(255, 255, 255); border-style: solid; border-width: 1px">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
+            <input id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
+            <span class="input-group-btn" style="height: inherit">
                         <button type="button" class="btn btn-default" style="height: 50px; width: 50px">
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
@@ -32,149 +35,185 @@
                             <span class="glyphicon glyphicon-ok"></span>
                         </button>
                     </span>
-            </div>
-            @*<br />
+        </div>
+        @*<br />
                     <input id="mainSlider" type="text" />
                     <script>$("#mainSlider").slider({ id: "mainSlider", min: 0, max: 100, value: 50 })</script>*@
-        </div>
     </div>
-    <div class="col-md-8 col-md-offset-2" style="align-content: flex-end">
-        <div class="row">
-            <div class="col-md-3" style="background-color: rgba(250, 250, 250, 1); border-radius: 5px; border-color: rgb(217, 237, 247); border-style: solid">
-                <br/>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Дата
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; border-radius: 5px">
-                            <i class="glyphicon glyphicon-calendar"></i>&nbsp;
-                            <span></span> <b class="caret"></b>
-                        </div>
-                        <script src="~/Scripts/datarange.js"></script>
-                    </div>
+</div>
+<div class="col-md-8 col-md-offset-2" style="align-content: flex-end">
+    <div class="row">
+        <div class="col-md-3" style="background-color: rgba(250, 250, 250, 1); border-radius: 5px; border-color: rgb(217, 237, 247); border-style: solid">
+            <br/>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Дата
+                    </h3>
                 </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <label style="font-weight: normal; cursor: pointer;">
-                                <input id="isPerformanceFilter" type="checkbox"> Показать выполненные
-                            </label>
-                        </h3>
+                <div class="panel-body">
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; border-radius: 5px">
+                        <i class="glyphicon glyphicon-calendar"></i>&nbsp;
+                        <span></span> <b class="caret"></b>
                     </div>
+                    <script src="~/Scripts/datarange.js"></script>
                 </div>
+            </div>
 
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>&nbsp;Приоритет
-                        </h3>
-                    </div>
-                    <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
                         <label style="font-weight: normal; cursor: pointer;">
-                            <input ng-model="PriorityMain" ng-click="PriorityAllSelect()" type="checkbox"> Выделить все
-                        </label><br />
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input id="1" class="PriorityFilter" type="checkbox"> Высокий
-                        </label><br/>
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input id="2" class="PriorityFilter" type="checkbox"> Средний
-                        </label><br/>
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input id="3" class="PriorityFilter" type="checkbox"> Низкий
+                            <input id="isPerformanceFilter" type="checkbox"> Показать выполненные
                         </label>
-                    </div>
+                    </h3>
                 </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="panel-title">
-                                    <span class="glyphicon glyphicon-tasks"></span>&nbsp;Категория&nbsp;
-                                    <a style="cursor: pointer; font-family: cursive"><span class="glyphicon glyphicon-pencil"></span>изменить</a><br/>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <label style="font-weight: normal; cursor: pointer;">
-                                <input ng-model="CategoryMain" ng-click="CategoryAllSelect()" type="checkbox"> Выделить все
-                            </label><br />
-                        </div>
-                        <div ng-repeat="category in CategoryArray">
-                            <label style="font-weight: normal; cursor: pointer;">
-                                <input id="{{category.CategoryTypeId}}" class="CategoryFilter" type="checkbox"> {{category.CategoryName}}
-                            </label>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    $('.PriorityFilter').prop("checked", true);
-                    $('.CategoryFilter').prop("checked", true);
-                </script>
-
-                <div class="col-md-12">
-                    <div style="text-align: center">
-                        <button class="btn btn-info" ng-click="btnGetTasks()" style="width: auto; text-align: center">&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;Показать&nbsp;&nbsp;</button>
-                    </div>
-                </div>
-
-                <div class="col-md-12" style="height: 15px"></div>
-
             </div>
 
-            <div class="col-md-9" style="background-color: rgba(250, 250, 250, 1); border-radius: 5px; border-color: rgb(217, 237, 247); border-style: solid">
-                <br />
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span class="glyphicon glyphicon-th-list"></span>&nbsp;Ваши задачи
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-show="vm.tableParams.data.length != 0">
-                            <table ng-table="vm.tableParams" class="table table-bordered table-hover">
-                                <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
-                                    <td style="width: 1%">
-                                        <span class="bl-mark" style="background-color: red"></span>
-                                    </td>
-                                    <td title="'Наименование'" sortable="'name'" style="width: 44%">
-                                        {{user.TaskName}}
-                                    </td>
-                                    <td style="width: 3%">
-                                        <a class="btn btn-default pull-right row-info-sign btn-mini">
-                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                        </a>
-                                    </td>
-                                    <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
-                                        {{user.SetDate}}
-                                    </td>
-                                    <td title="'Затраты'" style="width: 20%; text-align: center">
-                                        {{user.SpendTime}}
-                                    </td>
-                                    <td title="'Выполнено'" style="width: 10%; text-align: center">
-                                        <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div ng-show="vm.tableParams.data.length == 0" style="background-color: rgba(217, 237, 247, 0.3); border-radius: 10px; height: 160px; text-align: center;">
-                            <div style="display: inline-block; vertical-align: middle;  height: 120px;">
-                                <h1 class="minimaze-hidden" style="font-family: PlayfairDisplay-Italic;"><span class="glyphicon glyphicon-search"></span>Задач не найдено.</h1>
-                            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>&nbsp;Приоритет
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input ng-model="PriorityMain" ng-click="PriorityAllSelect()" type="checkbox"> Выделить все
+                    </label><br/>
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input id="1" class="PriorityFilter" type="checkbox"> Высокий
+                    </label><br/>
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input id="2" class="PriorityFilter" type="checkbox"> Средний
+                    </label><br/>
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input id="3" class="PriorityFilter" type="checkbox"> Низкий
+                    </label>
+                </div>
+            </div>
 
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-tasks"></span>&nbsp;Категория&nbsp;
+                                <a ng-click="CategoryChanges()" style="cursor: pointer; font-family: cursive"><span class="glyphicon glyphicon-pencil"></span>изменить</a><br/>
+                            </h3>
                         </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <label ng-show="CategoryArray.length != 0" style="font-weight: normal; cursor: pointer;">
+                            <input ng-model="CategoryMain" ng-click="CategoryAllSelect()" type="checkbox"> Выделить все
+                        </label><br/>
+                    </div>
+                    <div ng-repeat="category in CategoryArray">
+                        <label style="font-weight: normal; cursor: pointer;">
+                            <input id="{{category.CategoryTypeId}}" class="CategoryFilter" type="checkbox"> {{category.CategoryName}}
+                        </label>
+                        <br/>
                     </div>
                 </div>
             </div>
+
+            <script>
+                $('.PriorityFilter').prop("checked", true);
+                $('.CategoryFilter').prop("checked", true);
+            </script>
+
+            <div class="col-md-12">
+                <div style="text-align: center">
+                    <button class="btn btn-info" ng-click="btnGetTasks()" style="width: auto; text-align: center">&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;Показать&nbsp;&nbsp;</button>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="height: 15px"></div>
+
+        </div>
+
+        <div class="col-md-9" style="background-color: rgba(250, 250, 250, 1); border-radius: 5px; border-color: rgb(217, 237, 247); border-style: solid">
+            <br/>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-th-list"></span>&nbsp;Ваши задачи
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-show="vm.tableParams.data.length != 0">
+                        <table ng-table="vm.tableParams" class="table table-bordered table-hover">
+                            <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
+                                <td style="width: 1%">
+                                    <span class="bl-mark" style="background-color: red"></span>
+                                </td>
+                                <td title="'Наименование'" sortable="'name'" style="width: 44%">
+                                    {{user.TaskName}}
+                                </td>
+                                <td style="width: 3%">
+                                    <a class="btn btn-default pull-right row-info-sign btn-mini">
+                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
+                                    {{user.SetDate}}
+                                </td>
+                                <td title="'Затраты'" style="width: 20%; text-align: center">
+                                    {{user.SpendTime}}
+                                </td>
+                                <td title="'Выполнено'" style="width: 10%; text-align: center">
+                                    <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div ng-show="vm.tableParams.data.length == 0" style="background-color: rgba(217, 237, 247, 0.3); border-radius: 10px; height: 160px; text-align: center;">
+                        <div style="display: inline-block; vertical-align: middle;">
+                            <h1 class="minimaze-hidden" style="font-family: PlayfairDisplay-Italic;">Задач не найдено.</h1>
+                        </div>
+                        <div style="display: inline-block; height: 100%; width: 0px; vertical-align: middle;"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12" style="height: 250px"></div>
     </div>
 </div>
+
+
+
+    @*Модальное окно изменения категорий*@
+    <div class="modal fade" id="categoryChangeModal" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(217, 237, 247);">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Редактирование категорий</h4>
+                </div>
+                <div class="modal-body" style="text-align: center">
+
+                    <div>
+                        <div ng-repeat="categoryCopy in CategoryArrayCopy" class="input-group col-md-8 col-md-offset-2">
+                            <input checked category-directive="categoryCopy" data-off-text='&nbsp;&nbsp;&nbsp;&nbsp;Будет удалена&nbsp;&nbsp;&nbsp;&nbsp;' type="checkbox" name="my-checkbox">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="input-group col-md-8 col-md-offset-2" >
+                        <input id="newCategoryId" ng-model="NewCategory" type="text" class="form-control" placeholder="Введите категорию" style="max-width: 400px; width: 100%" required>
+                        <span class="input-group-btn">
+                            <button ng-click="AddNewCategory();" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="CategoryRefresh()" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button ng-click="SaveChangedCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
 

@@ -187,5 +187,33 @@ namespace WebTaskManager.Manager
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult AddCategory(int userId, string category)
+        {
+            var inputCategory = JsonConvert.DeserializeObject<string[]>(category);
+            foreach (var item in inputCategory)
+            {
+                _userRepository.AddCategory(userId, item);
+            }
+
+            return new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult RemoveCategory(int userId, string category)
+        {
+            var inputCategoryIds = JsonConvert.DeserializeObject<int[]>(category);
+            foreach (var id in inputCategoryIds)
+            {
+                _userRepository.RemoveCategory(userId, id);
+            }
+
+            return new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
     }
 }
