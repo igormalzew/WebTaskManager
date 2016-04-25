@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Web.UI.WebControls;
 using WebTaskManager.Models.repository;
 
 namespace WebTaskManager.Repository
@@ -10,7 +8,6 @@ namespace WebTaskManager.Repository
     public class UserRepository
     {
         private readonly DBTaskManagerContext _model = new DBTaskManagerContext();
-
         public AuthorizationUserInfo GetUserAuthorizationInfobyLogin(string login)
         {
             var user = _model.User.FirstOrDefault(c => c.Login == login);

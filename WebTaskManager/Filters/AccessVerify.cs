@@ -6,24 +6,14 @@ namespace WebTaskManager.Filters
     {
         static private readonly UserManager UserManager = new UserManager();
 
-        public static string GetNameAuthorizedUser(HttpContext httpContext)
+        public static string[] GetInfoAuthorizedUser(HttpContext httpContext)
         {
             if (httpContext.Request.Cookies["id"] == null) return null;
 
             var userCoockie = httpContext.Request.Cookies["id"].Value;
             var userInfo = UserManager.GetCoockieRecord(userCoockie);
 
-            return userInfo?.User?.Name;
-        }
-
-        public static int? GetUserIdAuthorizedUser(HttpContext httpContext)
-        {
-            if (httpContext.Request.Cookies["id"] == null) return null;
-
-            var userCoockie = httpContext.Request.Cookies["id"].Value;
-            var userInfo = UserManager.GetCoockieRecord(userCoockie);
-
-            return userInfo?.User?.UserId;
+            return userInfo == null ? null : new [] {userInfo.User.Name, userInfo.UserId.ToString()};
         }
         
     }

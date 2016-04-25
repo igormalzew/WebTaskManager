@@ -28,7 +28,7 @@
         <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
             <input id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
             <span class="input-group-btn" style="height: inherit">
-                        <button type="button" class="btn btn-default" style="height: 50px; width: 50px">
+                        <button ng-click="TaskChanges()" type="button" class="btn btn-default" style="height: 50px; width: 50px">
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
                         <button type="button" class="btn btn-info" style="height: 50px; width: 50px">
@@ -133,7 +133,8 @@
 
         <div class="col-md-9" style="background-color: rgba(250, 250, 250, 1); border-radius: 5px; border-color: rgb(217, 237, 247); border-style: solid">
             <br/>
-            <div class="panel panel-info">
+            @*Панель отображения всех задач*@
+            <div ng-show="!IsTaskEdit" class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <span class="glyphicon glyphicon-th-list"></span>&nbsp;Ваши задачи
@@ -175,8 +176,72 @@
                     </div>
                 </div>
             </div>
+
+            @*Панель редактирования задачи*@
+            <div ng-show="IsTaskEdit" class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title col-md-">
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;Редактирование задачи
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="taskName" placeholder="Название" style="max-width: 1000px">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="taskDescription" placeholder="Описание" style="max-width: 1000px; resize: none"></textarea>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="col-md-3">
+                                                <h4 style="text-align: left">Приоритет:</h4>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div style="height: 4px"></div>
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-success">
+                                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Низкий
+                                                    </label>
+                                                    <label class="btn btn-warning active">
+                                                        <input type="radio" name="options" id="option2" autocomplete="off"> Средний
+                                                    </label>
+                                                    <label class="btn btn-danger">
+                                                        <input type="radio" name="options" id="option3" autocomplete="off"> Высокий
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="taskDate" data-toggle="tooltip" data-placement="top" title="Дата выполнения задачи" style="max-width: 1000px">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="taskCategory" placeholder="Выбор категорий" style="max-width: 1000px; resize: none"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-footer" style="background-color: rgb(217, 237, 247);">
+                    <button ng-click="" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button ng-click="" type="button" class="btn btn-primary" data-dismiss="modal">Поставить задачу</button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-12" style="height: 250px"></div>
+        <div class="col-md-12" style="height: 200px"></div>
     </div>
 </div>
 
@@ -188,7 +253,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(217, 237, 247);">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Редактирование категорий</h4>
+                    <h4 class="modal-title">Редактирование категорий</h4>
                 </div>
                 <div class="modal-body" style="text-align: center">
 
@@ -213,6 +278,73 @@
         </div>
     </div>
 
+
+    @*Модальное окно редактирования задачи*@
+    @*<div class="modal fade" id="taskChangeModal" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(217, 237, 247);">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Редактирование задачи</h4>
+                </div>
+                <div class="modal-body" style="text-align: center">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="taskName" placeholder="Название" style="max-width: 1000px">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="taskDescription" placeholder="Описание" style="max-width: 1000px; resize: none"></textarea>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="col-md-3">
+                                                <h4 style="text-align: left">Приоритет:</h4>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div style="height: 4px"></div>
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-success">
+                                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Низкий
+                                                    </label>
+                                                    <label class="btn btn-warning active">
+                                                        <input type="radio" name="options" id="option2" autocomplete="off"> Средний
+                                                    </label>
+                                                    <label class="btn btn-danger">
+                                                        <input type="radio" name="options" id="option3" autocomplete="off"> Высокий
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="taskDate" data-toggle="tooltip" data-placement="top" title="Дата выполнения задачи" style="max-width: 1000px">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="taskCategory" placeholder="Выбор категорий" style="max-width: 1000px; resize: none"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-click="" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <button ng-click="" type="button" class="btn btn-primary" data-dismiss="modal">Поставить задачу</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
 
 </body>
 </html>

@@ -16,7 +16,14 @@ namespace WebTaskManager.Manager
 
         public CoockieByLogin GetCoockieRecord(string coockie)
         {
-            return _userRepository.GetCoockieRecord(coockie);
+            try
+            {
+                return _userRepository.GetCoockieRecord(coockie);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public JsonResult AddNewUser(string birthDay, string email, string login, string name, string password)

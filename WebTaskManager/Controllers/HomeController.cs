@@ -14,8 +14,8 @@ namespace WebTaskManager.Controllers
 
         public ActionResult Index()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -23,15 +23,15 @@ namespace WebTaskManager.Controllers
             }
 
             ViewBag.IsAuthorized = true;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userInfo[0];
             return RedirectToAction("MainPage", "home");
         }
 
 
         public ActionResult MainPage()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -39,14 +39,14 @@ namespace WebTaskManager.Controllers
             }
 
             ViewBag.IsAuthorized = true;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userInfo[0];
             return View();
         }
 
         public ActionResult Registration()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -54,14 +54,14 @@ namespace WebTaskManager.Controllers
             }
 
             ViewBag.IsAuthorized = true;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userInfo[0];
             return View();
         }
 
         public ActionResult LogOut()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -77,8 +77,8 @@ namespace WebTaskManager.Controllers
 
         public ActionResult About()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -86,14 +86,14 @@ namespace WebTaskManager.Controllers
             }
 
             ViewBag.IsAuthorized = true;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userInfo[0];
             return View();
         }
 
         public ActionResult Contact()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName == null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo == null)
             {
                 ViewBag.IsAuthorized = false;
                 ViewBag.UserName = String.Empty;
@@ -101,7 +101,7 @@ namespace WebTaskManager.Controllers
             }
 
             ViewBag.IsAuthorized = true;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userInfo[0];
             return View();
         }
 
@@ -112,56 +112,40 @@ namespace WebTaskManager.Controllers
 
         public JsonResult GetTasks(string filter)
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName != null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
             {
-                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
-                if (userId == null) return null;
-
-
-                return _userManager.GetTasks(Convert.ToInt32(userId), filter);
+                return _userManager.GetTasks(Convert.ToInt32(userInfo[1]), filter);
             }
             return null;
         }
 
         public JsonResult GetCategory()
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName != null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
             {
-                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
-                if (userId == null) return null;
-
-
-                return _userManager.GetCategory(Convert.ToInt32(userId));
+                return _userManager.GetCategory(Convert.ToInt32(userInfo[1]));
             }
             return null;
         }
 
         public JsonResult AddCategory(string category)
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName != null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
             {
-                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
-                if (userId == null) return null;
-
-
-                return _userManager.AddCategory(Convert.ToInt32(userId), category);
+                return _userManager.AddCategory(Convert.ToInt32(userInfo[1]), category);
             }
             return null;
         }
 
         public JsonResult RemoveCategory(string category)
         {
-            var userName = AccessVerify.GetNameAuthorizedUser(System.Web.HttpContext.Current);
-            if (userName != null)
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
             {
-                var userId = AccessVerify.GetUserIdAuthorizedUser(System.Web.HttpContext.Current);
-                if (userId == null) return null;
-
-
-                return _userManager.RemoveCategory(Convert.ToInt32(userId), category);
+                return _userManager.RemoveCategory(Convert.ToInt32(userInfo[1]), category);
             }
             return null;
         }

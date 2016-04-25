@@ -11,6 +11,7 @@ var TaskApp = angular.module("TaskApp", ["ngTable"])
 TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     $scope.CategoryMain = true;
     $scope.PriorityMain = true;
+    $scope.IsTaskEdit = false;
 
     var self = this;
 
@@ -82,10 +83,10 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
 
 
     // Изменение категорий
-    $scope.CategoryChanges = function () {
+    $scope.CategoryChanges = function() {
         $('#categoryChangeModal').modal();
-       // $("[name='my-checkbox']").bootstrapSwitch();
-    }
+        // $("[name='my-checkbox']").bootstrapSwitch();
+    };
 
     $scope.AddNewCategory = function () {
         if ($scope.NewCategory === undefined || $scope.NewCategory === '') {
@@ -141,6 +142,12 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
 
     }
 
+    // Изменение задачи
+    $scope.TaskChanges = function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $scope.IsTaskEdit = true;
+        // $("[name='my-checkbox']").bootstrapSwitch();
+    };
 });
 
 
