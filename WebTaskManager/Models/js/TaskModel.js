@@ -11,7 +11,10 @@ var TaskApp = angular.module("TaskApp", ["ngTable"])
 TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     $scope.CategoryMain = true;
     $scope.PriorityMain = true;
+
     $scope.IsTaskEdit = false;
+    $scope.IsTimeEdit = false;
+
 
     var self = this;
 
@@ -147,6 +150,35 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         $('[data-toggle="tooltip"]').tooltip();
         $scope.IsTaskEdit = true;
         // $("[name='my-checkbox']").bootstrapSwitch();
+    };
+
+    $scope.TimeEdit = function() {
+        $scope.IsTimeEdit = true;
+        $('.spinbox').css("border", "1px solid red");
+
+        $scope.HoursBufer = $('#HoursTime').val();
+        $scope.MinutesBufer = $('#MinutesTime').val();
+        $('#HoursTime').val('');
+        $('#MinutesTime').val('');
+    };
+
+    $scope.TimeEditComplete = function () {
+        $scope.IsTimeEdit = false;
+        $('.spinbox').css("border", "");
+
+        var h = $('#HoursTime').val();
+        var m = $('#MinutesTime').val();
+
+        var sumMinute = ((parseInt($scope.HoursBufer) + parseInt(h !== '' ? h : 0)) * 60) + parseInt($scope.MinutesBufer) + parseInt(m !== '' ? m : 0);
+        $('#HoursTime').val(Math.floor(sumMinute / 60));
+        $('#MinutesTime').val(sumMinute % 60);
+    };
+
+    $scope.TimeEditRevert = function () {
+        $scope.IsTimeEdit = false;
+        $('.spinbox').css("border", "");
+        $('#HoursTime').val($scope.HoursBufer);
+        $('#MinutesTime').val($scope.MinutesBufer);
     };
 });
 

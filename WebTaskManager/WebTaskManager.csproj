@@ -217,6 +217,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\daterangepicker.css" />
+    <Content Include="Content\fuelux.min.css" />
     <Content Include="Content\images\2560x1600 23.jpg" />
     <Content Include="Content\images\2560x1600.jpg" />
     <Content Include="Content\images\2560x16011.jpg" />
@@ -246,6 +247,7 @@
     <Content Include="Scripts\minimaze-hidden.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\ng-table.min.js" />
+    <Content Include="Scripts\spinbox.js" />
     <Content Include="TaskManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TaskManagerModel.edmx</DependentUpon>
