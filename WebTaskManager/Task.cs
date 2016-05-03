@@ -24,7 +24,6 @@ namespace WebTaskManager
         public int UserId { get; set; }
         public string TaskName { get; set; }
         public int PriorityId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
         public string FullDescription { get; set; }
         public System.DateTime SetDate { get; set; }
         public int IsPerformance { get; set; }

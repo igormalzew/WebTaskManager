@@ -149,5 +149,25 @@ namespace WebTaskManager.Controllers
             }
             return null;
         }
+
+        public JsonResult AddNewTask(string taskData)
+        {
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
+            {
+                return _userManager.AddNewTask(Convert.ToInt32(userInfo[1]), taskData);
+            }
+            return null;
+        }
+
+        public JsonResult SaveTask(string taskData)
+        {
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
+            {
+                return _userManager.SaveTask(Convert.ToInt32(userInfo[1]), taskData);
+            }
+            return null;
+        }
     }
 }

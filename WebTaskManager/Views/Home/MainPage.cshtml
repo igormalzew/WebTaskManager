@@ -22,13 +22,17 @@
     <script src="~/Scripts/spinbox.js"></script>
     <link rel="stylesheet" href="~/Content/fuelux.min.css">
 
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap-multiselect.css">
+
+
 </head>
 <body ng-controller="TaskController as vm" class="image-screen" style="background: url(/Content/images/2560x16011.jpg) no-repeat center center fixed;">
 <br/><br/><br/><br/>
 <div class="jumbotron col-md-8 col-md-offset-2" style="background-color: rgba(217, 237, 247, 0.5); border-radius: 10px; border-color: rgb(255, 255, 255); border-style: solid; border-width: 1px">
     <div class="col-md-6 col-md-offset-3">
         <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
-            <input id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
+            <input ng-model="mainTaskInput" id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
             <span class="input-group-btn" style="height: inherit">
                         <button ng-click="TaskChanges()" type="button" class="btn btn-default" style="height: 50px; width: 50px">
                             <span class="glyphicon glyphicon-info-sign"></span>
@@ -54,7 +58,7 @@
                         <i class="glyphicon glyphicon-calendar"></i>&nbsp;
                         <span></span> <b class="caret"></b>
                     </div>
-                    <script src="~/Scripts/datarange.js"></script>
+                    <script src="~/Scripts/daterange.js"></script>
                 </div>
             </div>
 
@@ -115,6 +119,7 @@
                 </div>
             </div>
 
+
             <script>
                 $('.PriorityFilter').prop("checked", true);
                 $('.CategoryFilter').prop("checked", true);
@@ -150,7 +155,7 @@
                                     {{user.TaskName}}
                                 </td>
                                 <td style="width: 3%">
-                                    <a class="btn btn-default pull-right row-info-sign btn-mini">
+                                    <a ng-click="TaskChanges(this.user)" class="btn btn-default pull-right row-info-sign btn-mini">
                                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                     </a>
                                 </td>
@@ -189,27 +194,30 @@
                             <div class="form-group">
                                 <form>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="taskName" placeholder="Название" style="max-width: 1000px">
+                                        <input type="text" class="form-control" ng-model="taskInput" placeholder="Название" style="max-width: 1000px">
                                     </div>
+                                    <div style="height: 4px"></div>
                                     <div class="form-group">
-                                        <textarea class="form-control" id="taskDescription" placeholder="Описание" style="max-width: 1000px; resize: none"></textarea>
+                                        <textarea class="form-control" ng-model="taskDescription" placeholder="Описание" style="max-width: 1000px; resize: none"></textarea>
                                     </div>
+                                    <div style="height: 6px"></div>
                                     <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <div class="col-md-3">
+                                        <div class="panel-body row">
+                                            <div style="height: 3px"></div>
+                                            <div class="col-md-2">
                                                 <h4 style="text-align: left">Приоритет&nbsp;&nbsp;</h4>
                                             </div>
-                                            <div class="col-md-9">
+                                            <div class="col-md-10">
                                                 <div style="height: 4px"></div>
-                                                <div class="btn-group" data-toggle="buttons">
+                                                <div class="btn-group" style="float: right">
                                                     <label class="btn btn-success">
-                                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Низкий
+                                                        <input type="radio" ng-model="taskPriorityOption" value="1"> Низкий
                                                     </label>
-                                                    <label class="btn btn-warning active">
-                                                        <input type="radio" name="options" id="option2" autocomplete="off"> Средний
+                                                    <label class="btn btn-warning">
+                                                        <input type="radio" ng-model="taskPriorityOption" value="2"> Средний
                                                     </label>
                                                     <label class="btn btn-danger">
-                                                        <input type="radio" name="options" id="option3" autocomplete="off"> Высокий
+                                                        <input type="radio" ng-model="taskPriorityOption" value="3"> Высокий
                                                     </label>
                                                 </div>
                                             </div>
@@ -222,17 +230,35 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="taskDate" data-toggle="tooltip" data-placement="top" title="Дата выполнения задачи" style="max-width: 1000px">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Категории</h4>
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <div style="height: 4px"></div>
+                                            <select class="form-control" id="taskCategorySelect" multiple="multiple" style="float: right">
+                                                <option ng-repeat="category in CategoryArray" value="{{category.CategoryTypeId}}">{{category.CategoryName}}</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="taskCategory" placeholder="Выбор категорий" style="max-width: 1000px; resize: none"></textarea>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="col-md-6">
+                                                <h4>Дата выполнения </h4>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div style="height: 4px"></div>
+                                                <input type="text" class="form-control" id="dateTimeTask" style="max-width: 1000px; text-align: center">
+                                            </div>
+                                        </div>
                                     </div>
+                                    <script src="~/Scripts/dateTimeTask.js"></script>
 
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="col-md-7">
-                                                <h4 style="text-align: left">Затраты времени&nbsp;
+                                                <h4 style="text-align: left">
+                                                    Затраты времени&nbsp;
                                                     <a ng-show="!IsTimeEdit" ng-click="TimeEdit()" data-toggle="tooltip" data-placement="top" title="Добавить время" style="cursor: pointer; font-family: cursive;"><span class="glyphicon glyphicon-plus"></span></a>
                                                     <a ng-show="IsTimeEdit" ng-click="TimeEditComplete()" data-toggle="tooltip" data-placement="top" title="Отмена" style="cursor: pointer; font-family: cursive;"><span class="glyphicon glyphicon-remove"></span></a>
                                                     <a ng-show="IsTimeEdit" ng-click="TimeEditComplete()" data-toggle="tooltip" data-placement="top" title="Добавить" style="cursor: pointer; font-family: cursive;"><span class="glyphicon glyphicon-ok"></span></a>
@@ -287,8 +313,10 @@
                     </div>
                 </div>
                 <div class="panel-footer" style="background-color: rgb(217, 237, 247);">
-                    <button ng-click="" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button ng-click="" type="button" class="btn btn-primary" data-dismiss="modal">Поставить задачу</button>
+                    <button ng-click="TaskCancel()" type="button" class="btn btn-default">Отмена</button>
+                    <button ng-show="IsNewTask" ng-click="AddNewTask();TaskCancel()" type="button" class="btn btn-primary">Добавить задачу</button>
+                    <button ng-show="!IsNewTask" ng-click="SaveTask();TaskCancel()" type="button" class="btn btn-primary">Сохранить изменения</button>
+                    <button ng-show="!IsNewTask" ng-click="" type="button" class="btn btn-default" style="float: right">Удалить задачу</button>
                 </div>
             </div>
         </div>
@@ -328,74 +356,6 @@
             </div>
         </div>
     </div>
-
-
-    @*Модальное окно редактирования задачи*@
-    @*<div class="modal fade" id="taskChangeModal" tabindex="-1" role="dialog" data-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(217, 237, 247);">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Редактирование задачи</h4>
-                </div>
-                <div class="modal-body" style="text-align: center">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="taskName" placeholder="Название" style="max-width: 1000px">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="taskDescription" placeholder="Описание" style="max-width: 1000px; resize: none"></textarea>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <div class="col-md-3">
-                                                <h4 style="text-align: left">Приоритет:</h4>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div style="height: 4px"></div>
-                                                <div class="btn-group" data-toggle="buttons">
-                                                    <label class="btn btn-success">
-                                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Низкий
-                                                    </label>
-                                                    <label class="btn btn-warning active">
-                                                        <input type="radio" name="options" id="option2" autocomplete="off"> Средний
-                                                    </label>
-                                                    <label class="btn btn-danger">
-                                                        <input type="radio" name="options" id="option3" autocomplete="off"> Высокий
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="taskDate" data-toggle="tooltip" data-placement="top" title="Дата выполнения задачи" style="max-width: 1000px">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="taskCategory" placeholder="Выбор категорий" style="max-width: 1000px; resize: none"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button ng-click="" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                        <button ng-click="" type="button" class="btn btn-primary" data-dismiss="modal">Поставить задачу</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
 
 </body>
 </html>

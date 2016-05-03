@@ -15,6 +15,7 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     $scope.IsTaskEdit = false;
     $scope.IsTimeEdit = false;
 
+    $scope.taskPriorityOption = '2';
 
     var self = this;
 
@@ -88,7 +89,6 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     // Изменение категорий
     $scope.CategoryChanges = function() {
         $('#categoryChangeModal').modal();
-        // $("[name='my-checkbox']").bootstrapSwitch();
     };
 
     $scope.AddNewCategory = function () {
@@ -146,10 +146,34 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     }
 
     // Изменение задачи
-    $scope.TaskChanges = function () {
-        $('[data-toggle="tooltip"]').tooltip();
+    $scope.TaskChanges = function (taskData) {
+        $scope.IsNewTask = taskData === undefined;
         $scope.IsTaskEdit = true;
-        // $("[name='my-checkbox']").bootstrapSwitch();
+        $scope.taskInput = $scope.mainTaskInput;
+        $scope.mainTaskInput = '';
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#taskCategorySelect').multiselect({
+            buttonWidth: '100%',
+            dropRight: true,
+            nonSelectedText: 'Не выбрано',
+            nSelectedText: ' категорий',
+            allSelectedText: 'Выбраны все категории'
+        });
+        if (taskData !== undefined && taskData !== null) {
+            $scope.currentEditTaskId = taskData.TaskId;
+
+            $scope.taskInput = taskData.TaskName;
+            $scope.taskDescription = taskData.FullDescription;
+            $scope.taskPriorityOption = taskData.PriorityId;
+            $('#taskCategorySelect').multiselect('select', taskData.Category);
+            $('#dateTimeTask').val(taskData.SetDate);
+
+            if (taskData.SpendTime !== null) {
+                $('#HoursTime').val(Math.floor(taskData.SpendTime / 60));
+                $('#MinutesTime').val(taskData.SpendTime % 60);
+            }
+        }
     };
 
     $scope.TimeEdit = function() {
@@ -180,6 +204,57 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         $('#HoursTime').val($scope.HoursBufer);
         $('#MinutesTime').val($scope.MinutesBufer);
     };
+
+    $scope.TaskCancel = function() {
+        $scope.IsTaskEdit = false;
+        $scope.taskInput = '';
+        $scope.mainTaskInput = '';
+        $scope.taskDescription = '';
+        $scope.taskPriorityOption = 2;
+        $('#taskCategorySelect').val('');
+        $('#dateTimeTask').val(moment());
+        $('#HoursTime').val(0);
+        $('#MinutesTime').val(0);
+
+    };
+
+    $scope.GetTaskData = function (){
+        var h = $('#HoursTime').val();
+        var m = $('#MinutesTime').val();
+
+        var name = $scope.taskInput;
+        var descriptyon = $scope.taskDescription;
+        var priority = $scope.taskPriorityOption;
+        var taskCategory = $('#taskCategorySelect').val();
+        var taskDate = $('#dateTimeTask').val();
+        var spendTime = (parseInt(h !== '' ? h : 0) * 60) + parseInt(m !== '' ? m : 0);
+
+        var task = { name, descriptyon, priority, taskCategory, taskDate, spendTime };
+        return task;
+    }
+
+    $scope.AddNewTask = function() {
+        var taskData = $scope.GetTaskData();
+        $http({
+            url: 'AddNewTask',
+            method: "GET",
+            params: { taskData: taskData }
+        }).success(function () {
+            $scope.btnGetTasks();
+        });
+    }
+
+    $scope.SaveTask = function () {
+        var taskData = $scope.GetTaskData();
+        taskData.taskId = $scope.currentEditTaskId;
+        $http({
+            url: 'SaveTask',
+            method: "GET",
+            params: { taskData: taskData }
+        }).success(function () {
+            $scope.btnGetTasks();
+        });
+    }
 });
 
 

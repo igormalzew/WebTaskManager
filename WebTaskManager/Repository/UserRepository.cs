@@ -93,11 +93,10 @@ namespace WebTaskManager.Repository
             var isCaregoryArrEmpty = categoryFilter.Length == 0;
 
             var tasks = from t in _model.Task
-                join c in _model.Category on t.TaskId equals c.TaskId
                 where t.UserId == userId && t.SetDate >= startDate &&
-                      t.SetDate <= endDate && (isPerformanceFilter == 1 || t.IsPerformance != isPerformanceFilter) &&
-                      priorityFilter.Contains(t.PriorityId) && ((isCaregoryArrEmpty && t.CategoryId == null) ||
-                                                                    (t.CategoryId != null && categoryFilter.Contains(c.CategoryId)))
+                      t.SetDate <= endDate && (isPerformanceFilter == 1 || t.IsPerformance != 1) &&
+                      priorityFilter.Contains(t.PriorityId) &&
+                      (isCaregoryArrEmpty || t.Category1.Where(c => c.TaskId == t.TaskId).Any(c => categoryFilter.Contains(c.CategoryTypeId)))
                         select t;
 
             return tasks.ToList();
@@ -143,6 +142,42 @@ namespace WebTaskManager.Repository
             if(category == null) return;
             
             _model.CategoryType.Remove(category);
+            _model.SaveChanges();
+        }
+
+        public void AddNewTask(int userId, TaskData taskData)
+        {
+            DateTime setDate;
+            DateTime.TryParse(taskData.TaskDate, out setDate);
+
+            var task = new Task
+            {
+                UserId = userId,
+                TaskName = taskData.Name,
+                FullDescription = taskData.Descriptyon,
+                PriorityId = taskData.Priority,
+                SetDate = setDate,
+                IsPerformance = 0
+            };
+
+            _model.Task.Add(task);
+            _model.SaveChanges();
+        }
+
+        public void SaveTask(int userId, TaskData taskData)
+        {
+            DateTime setDate;
+            DateTime.TryParse(taskData.TaskDate, out setDate);
+
+            var task = _model.Task.FirstOrDefault(c => c.UserId == userId && c.TaskId == taskData.TaskId);
+
+            if(task == null) return;
+
+            task.TaskName = taskData.Name;
+            task.FullDescription = taskData.Descriptyon;
+            task.PriorityId = taskData.Priority;
+            task.SetDate = setDate;
+          
             _model.SaveChanges();
         }
     }

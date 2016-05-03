@@ -148,7 +148,7 @@ namespace WebTaskManager.Manager
                 DateTime start;
                 DateTime end;
                 DateTime.TryParse(inputFilter.StartDate, out start);
-                DateTime.TryParse(inputFilter.StartDate, out end);
+                DateTime.TryParse(inputFilter.EndDate, out end);
                 tasks = _userRepository.GetTasks(userId, inputFilter.PriorityFilter, inputFilter.CategoryFilter,
                     start, end, Convert.ToInt32(inputFilter.IsPerformanceFilter));
             }
@@ -162,7 +162,7 @@ namespace WebTaskManager.Manager
                 c.TaskId,
                 c.TaskName,
                 c.FullDescription,
-                c.CategoryId,
+                Category = c.Category1.Select(s => s.CategoryTypeId).ToArray(),
                 c.IsPerformance,
                 c.PriorityId,
                 SetDate = c.SetDate.ToString("dd.MM.yyyy"),
@@ -216,6 +216,28 @@ namespace WebTaskManager.Manager
             {
                 _userRepository.RemoveCategory(userId, id);
             }
+
+            return new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult AddNewTask(int userId, string data)
+        {
+            var taskData = JsonConvert.DeserializeObject<TaskData>(data);
+            _userRepository.AddNewTask(userId, taskData);
+
+            return new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SaveTask(int userId, string data)
+        {
+            var taskData = JsonConvert.DeserializeObject<TaskData>(data);
+            _userRepository.SaveTask(userId, taskData);
 
             return new JsonResult
             {

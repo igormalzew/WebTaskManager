@@ -52,7 +52,6 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="TaskName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="PriorityId" Type="int" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
           <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
           <Property Name="SetDate" Type="date" Nullable="false" />
           <Property Name="IsPerformance" Type="int" Nullable="false" />
@@ -226,7 +225,6 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TaskName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PriorityId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" />
           <Property Name="FullDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="SetDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsPerformance" Type="Int32" Nullable="false" />
@@ -448,7 +446,6 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TaskName" ColumnName="TaskName" />
           <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
           <ScalarProperty Name="SetDate" ColumnName="SetDate" />
           <ScalarProperty Name="IsPerformance" ColumnName="IsPerformance" />
