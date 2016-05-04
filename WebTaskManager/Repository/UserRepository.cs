@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using WebTaskManager.Models.repository;
 
 namespace WebTaskManager.Repository
@@ -159,8 +160,20 @@ namespace WebTaskManager.Repository
                 SetDate = setDate,
                 IsPerformance = 0
             };
-
             _model.Task.Add(task);
+
+            if (taskData.TaskCategory != null)
+            {
+                foreach (var categoryType in taskData.TaskCategory)
+                {
+                    var cat = new Category
+                    {
+                        Task = task,
+                        CategoryTypeId = categoryType
+                    };
+                    _model.Category.Add(cat);
+                }
+            }
             _model.SaveChanges();
         }
 
