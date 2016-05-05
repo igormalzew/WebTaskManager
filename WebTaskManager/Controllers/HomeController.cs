@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using WebTaskManager.Filters;
 using WebTaskManager.Manager;
-using WebTaskManager.Models.repository;
 
 namespace WebTaskManager.Controllers
 {
@@ -166,6 +165,16 @@ namespace WebTaskManager.Controllers
             if (userInfo != null)
             {
                 return _userManager.SaveTask(Convert.ToInt32(userInfo[1]), taskData);
+            }
+            return null;
+        }
+
+        public JsonResult RemoveTask(int taskId)
+        {
+            var userInfo = AccessVerify.GetInfoAuthorizedUser(System.Web.HttpContext.Current);
+            if (userInfo != null)
+            {
+                return _userManager.RemoveTask(Convert.ToInt32(userInfo[1]), taskId);
             }
             return null;
         }

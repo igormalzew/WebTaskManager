@@ -6,10 +6,15 @@ var TaskApp = angular.module("TaskApp", ["ngTable"])
         element.attr('id', scope.categoryCopy.CategoryTypeId);
         element.bootstrapSwitch();
     }
-});;
+})
+.directive("tasktimeDirective", function() {
+    return function (scope, element, attrs) {
+        scope.user.timeFormat = Math.floor(scope.user.SpendTime / 60) + ':' + scope.user.SpendTime % 60;
+        }
+    });
 
 TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
-    $scope.CategoryMain = true;
+    $scope.CategoryMain = false;
     $scope.PriorityMain = true;
 
     $scope.IsTaskEdit = false;
@@ -152,6 +157,8 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         $scope.taskInput = $scope.mainTaskInput;
         $scope.mainTaskInput = '';
 
+        $('#IsPerformanceTask').bootstrapSwitch('state', false, true);
+
         $('[data-toggle="tooltip"]').tooltip();
         $('#taskCategorySelect').multiselect({
             buttonWidth: '100%',
@@ -169,9 +176,13 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
             $('#taskCategorySelect').multiselect('select', taskData.Category);
             $('#dateTimeTask').val(taskData.SetDate);
 
+            $('#IsPerformanceTask').bootstrapSwitch('state', Boolean(taskData.IsPerformance), true);
+
             if (taskData.SpendTime !== null) {
                 $('#HoursTime').val(Math.floor(taskData.SpendTime / 60));
                 $('#MinutesTime').val(taskData.SpendTime % 60);
+                $scope.hTask = Math.floor(taskData.SpendTime / 60);
+                $scope.mTask = taskData.SpendTime % 60;
             }
         }
     };
@@ -212,7 +223,8 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         $scope.taskDescription = '';
         $scope.taskPriorityOption = 2;
         $('#taskCategorySelect').val('');
-        $('#dateTimeTask').val(moment());
+        $('#taskCategorySelect').multiselect('rebuild');
+        $('#dateTimeTask').val(moment().format('DD.MM.YYYY'));
         $('#HoursTime').val(0);
         $('#MinutesTime').val(0);
 
@@ -229,12 +241,25 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         var taskDate = $('#dateTimeTask').val();
         var spendTime = (parseInt(h !== '' ? h : 0) * 60) + parseInt(m !== '' ? m : 0);
 
-        var task = { name, descriptyon, priority, taskCategory, taskDate, spendTime };
+        var isPerformance = $('#IsPerformanceTask').bootstrapSwitch('state');
+
+        var task = { name, descriptyon, priority, taskCategory, taskDate, spendTime, isPerformance };
         return task;
     }
 
-    $scope.AddNewTask = function() {
+    $scope.AddNewTask = function(isFastAdding) {
         var taskData = $scope.GetTaskData();
+
+        if (isFastAdding) {
+            if ($scope.mainTaskInput === '' || $scope.mainTaskInput === undefined) return;
+
+            taskData.name = $scope.mainTaskInput;
+            $scope.mainTaskInput = '';
+        } else {
+            if ($scope.taskInput === '' || $scope.taskInput === undefined) return;
+        }
+
+
         $http({
             url: 'AddNewTask',
             method: "GET",
@@ -242,15 +267,32 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         }).success(function () {
             $scope.btnGetTasks();
         });
+
+        $scope.TaskCancel();
     }
 
-    $scope.SaveTask = function () {
+    $scope.SaveTask = function() {
         var taskData = $scope.GetTaskData();
         taskData.taskId = $scope.currentEditTaskId;
         $http({
             url: 'SaveTask',
             method: "GET",
             params: { taskData: taskData }
+        }).success(function() {
+            $scope.btnGetTasks();
+        });
+    };
+
+    $scope.RemoveTaskAsk = function ()
+    {
+        $('#removeTaskAskModal').modal();
+    }
+
+    $scope.RemoveTask = function () {
+        $http({
+            url: 'RemoveTask',
+            method: "GET",
+            params: { taskId: $scope.currentEditTaskId }
         }).success(function () {
             $scope.btnGetTasks();
         });

@@ -34,10 +34,10 @@
         <div class="input-group" style="height: 50px; max-width: 700px; align-content: center">
             <input ng-model="mainTaskInput" id="mainInput" type="text" class="form-control" placeholder="Добавьте новую задачу на сегодня" style="max-width: 700px; width: 100%; height: 50px; font-size: 20px">
             <span class="input-group-btn" style="height: inherit">
-                        <button ng-click="TaskChanges()" type="button" class="btn btn-default" style="height: 50px; width: 50px">
+                        <button ng-disabled="IsTaskEdit" ng-click="TaskChanges()" type="button" class="btn btn-default" style="height: 50px; width: 50px">
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
-                        <button type="button" class="btn btn-info" style="height: 50px; width: 50px">
+                        <button ng-disabled="IsTaskEdit" ng-click="AddNewTask(true)" type="button" class="btn btn-info" style="height: 50px; width: 50px">
                             <span class="glyphicon glyphicon-ok"></span>
                         </button>
                     </span>
@@ -122,12 +122,12 @@
 
             <script>
                 $('.PriorityFilter').prop("checked", true);
-                $('.CategoryFilter').prop("checked", true);
+                $('.CategoryFilter').prop("checked", false);
             </script>
 
             <div class="col-md-12">
                 <div style="text-align: center">
-                    <button class="btn btn-info" ng-click="btnGetTasks()" style="width: auto; text-align: center">&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;Показать&nbsp;&nbsp;</button>
+                    <button ng-disabled="IsTaskEdit" class="btn btn-info" ng-click="btnGetTasks()" style="width: auto; text-align: center">&nbsp;<span class="glyphicon glyphicon-eye-open"></span>&nbsp;Показать&nbsp;&nbsp;</button>
                 </div>
             </div>
 
@@ -162,8 +162,8 @@
                                 <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
                                     {{user.SetDate}}
                                 </td>
-                                <td title="'Затраты'" style="width: 20%; text-align: center">
-                                    {{user.SpendTime}}
+                                <td tasktime-directive="user" title="'Затраты'" style="width: 20%; text-align: center">
+                                    {{user.timeFormat}}
                                 </td>
                                 <td title="'Выполнено'" style="width: 10%; text-align: center">
                                     <span class="glyphicon {{user.IsPerformance ? 'glyphicon-ok' : 'glyphicon-remove'}}"></span>
@@ -184,9 +184,15 @@
             @*Панель редактирования задачи*@
             <div ng-show="IsTaskEdit" class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title col-md-">
-                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;Редактирование задачи
-                    </h3>
+                    <div class="row">
+                        <h3 class="panel-title col-md-6">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;Редактирование задачи
+                        </h3>
+                        <div style="position:relative; float:right;">
+                            <input data-on-text='Выполнена' data-off-text='Не выполнена' type="checkbox" id="IsPerformanceTask">
+                            <div style="width: 20px"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -194,7 +200,7 @@
                             <div class="form-group">
                                 <form>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" ng-model="taskInput" placeholder="Название" style="max-width: 1000px">
+                                        <input type="text" class="form-control" ng-model="taskInput" placeholder="Название (обязательно)" style="max-width: 1000px">
                                     </div>
                                     <div style="height: 4px"></div>
                                     <div class="form-group">
@@ -314,9 +320,9 @@
                 </div>
                 <div class="panel-footer" style="background-color: rgb(217, 237, 247);">
                     <button ng-click="TaskCancel()" type="button" class="btn btn-default">Отмена</button>
-                    <button ng-show="IsNewTask" ng-click="AddNewTask();TaskCancel()" type="button" class="btn btn-primary">Добавить задачу</button>
+                    <button ng-show="IsNewTask" ng-click="AddNewTask();" type="button" class="btn btn-primary">Добавить задачу</button>
                     <button ng-show="!IsNewTask" ng-click="SaveTask();TaskCancel()" type="button" class="btn btn-primary">Сохранить изменения</button>
-                    <button ng-show="!IsNewTask" ng-click="" type="button" class="btn btn-default" style="float: right">Удалить задачу</button>
+                    <button ng-show="!IsNewTask" ng-click="RemoveTaskAsk();" type="button" class="btn btn-default" style="float: right">Удалить задачу</button>
                 </div>
             </div>
         </div>
@@ -327,31 +333,46 @@
 
 
     @*Модальное окно изменения категорий*@
-    <div class="modal fade" id="categoryChangeModal" tabindex="-1" role="dialog" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(217, 237, 247);">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Редактирование категорий</h4>
-                </div>
-                <div class="modal-body" style="text-align: center">
+<div class="modal fade" id="categoryChangeModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgb(217, 237, 247);">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Редактирование категорий</h4>
+            </div>
+            <div class="modal-body" style="text-align: center">
 
-                    <div>
-                        <div ng-repeat="categoryCopy in CategoryArrayCopy" class="input-group col-md-8 col-md-offset-2">
-                            <input checked category-directive="categoryCopy" data-off-text='&nbsp;&nbsp;&nbsp;&nbsp;Будет удалена&nbsp;&nbsp;&nbsp;&nbsp;' type="checkbox" name="my-checkbox">
-                        </div>
+                <div>
+                    <div ng-repeat="categoryCopy in CategoryArrayCopy" class="input-group col-md-8 col-md-offset-2">
+                        <input checked category-directive="categoryCopy" data-off-text='&nbsp;&nbsp;&nbsp;&nbsp;Будет удалена&nbsp;&nbsp;&nbsp;&nbsp;' type="checkbox" name="my-checkbox">
                     </div>
-                    <br />
-                    <div class="input-group col-md-8 col-md-offset-2" >
-                        <input id="newCategoryId" ng-model="NewCategory" type="text" class="form-control" placeholder="Введите категорию" style="max-width: 400px; width: 100%" required>
-                        <span class="input-group-btn">
+                </div>
+                <br/>
+                <div class="input-group col-md-8 col-md-offset-2">
+                    <input id="newCategoryId" ng-model="NewCategory" type="text" class="form-control" placeholder="Введите категорию" style="max-width: 400px; width: 100%" required>
+                    <span class="input-group-btn">
                             <button ng-click="AddNewCategory();" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
                         </span>
-                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="CategoryRefresh()" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button ng-click="SaveChangedCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @*Модальное окно подтверждения удаления*@
+    <div class="modal fade" id="removeTaskAskModal" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align: center">
+                    <h4>Вы действительно хотите удалить задачу?</h4>
                 </div>
                 <div class="modal-footer">
-                    <button ng-click="CategoryRefresh()" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button ng-click="SaveChangedCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button ng-click="RemoveTask();TaskCancel()" type="button" class="btn btn-primary" data-dismiss="modal">Удалить</button>
                 </div>
             </div>
         </div>

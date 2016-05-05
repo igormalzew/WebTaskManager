@@ -20,5 +20,6 @@ namespace WebTaskManager.Models.repository
         public int[] TaskCategory { get; set; }
         public string TaskDate { get; set; }
         public int SpendTime { get; set; }
+        public bool IsPerformance { get; set; }
     }
 }

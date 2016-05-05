@@ -13,10 +13,10 @@ namespace WebTaskManager
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBTaskManagerContext : DbContext
+    public partial class DBTaskManagerEntities : DbContext
     {
-        public DBTaskManagerContext()
-            : base("name=DBTaskManagerContext")
+        public DBTaskManagerEntities()
+            : base("name=DBTaskManagerEntities")
         {
         }
     
@@ -26,11 +26,11 @@ namespace WebTaskManager
         }
     
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<CategoryType> CategoryType { get; set; }
+        public virtual DbSet<CoockieByLogin> CoockieByLogin { get; set; }
+        public virtual DbSet<LoseAuth> LoseAuth { get; set; }
         public virtual DbSet<Priority> Priority { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<LoseAuth> LoseAuth { get; set; }
-        public virtual DbSet<CoockieByLogin> CoockieByLogin { get; set; }
-        public virtual DbSet<CategoryType> CategoryType { get; set; }
     }
 }

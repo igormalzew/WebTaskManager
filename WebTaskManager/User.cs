@@ -17,10 +17,10 @@ namespace WebTaskManager
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Task = new HashSet<Task>();
-            this.LoseAuth = new HashSet<LoseAuth>();
-            this.CoockieByLogin1 = new HashSet<CoockieByLogin>();
             this.CategoryType = new HashSet<CategoryType>();
+            this.CoockieByLogin = new HashSet<CoockieByLogin>();
+            this.LoseAuth = new HashSet<LoseAuth>();
+            this.Task = new HashSet<Task>();
         }
     
         public int UserId { get; set; }
@@ -32,12 +32,12 @@ namespace WebTaskManager
         public Nullable<System.DateTime> BirthDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Task { get; set; }
+        public virtual ICollection<CategoryType> CategoryType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CoockieByLogin> CoockieByLogin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoseAuth> LoseAuth { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CoockieByLogin> CoockieByLogin1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CategoryType> CategoryType { get; set; }
+        public virtual ICollection<Task> Task { get; set; }
     }
 }

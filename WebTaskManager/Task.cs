@@ -17,7 +17,7 @@ namespace WebTaskManager
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Task()
         {
-            this.Category1 = new HashSet<Category>();
+            this.Category = new HashSet<Category>();
         }
     
         public int TaskId { get; set; }
@@ -27,12 +27,11 @@ namespace WebTaskManager
         public string FullDescription { get; set; }
         public System.DateTime SetDate { get; set; }
         public int IsPerformance { get; set; }
-        public Nullable<System.TimeSpan> SpendTime { get; set; }
+        public Nullable<int> SpendTime { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual Priority Priority { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Category1 { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
+        public virtual User User { get; set; }
+        public virtual Priority Priority { get; set; }
     }
 }

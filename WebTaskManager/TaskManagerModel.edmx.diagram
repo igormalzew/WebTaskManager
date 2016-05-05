@@ -4,22 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b50d453d96cd4ac28a4faca128432a08" Name="Diagram1">
-        <EntityTypeShape EntityType="DBTaskManagerModel.Category" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.Priority" Width="1.5" PointX="2.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.Task" Width="1.5" PointX="4" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.User" Width="1.5" PointX="6.375" PointY="0.5" IsExpanded="true" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__Task__UserId__21B6055D" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__267ABA7A" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__Priority__Priori__25869641" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="8.25" PointY="4.5" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="9.75" PointY="1.125" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.CategoryType" Width="1.5" PointX="8.625" PointY="7.125" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__7D0E9093" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A" />
-        <AssociationConnector Association="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" />
+      <Diagram DiagramId="bdf125cafc064003bdca012af81e08bc" Name="Diagram1">
+        <EntityTypeShape EntityType="DBTaskManagerModel.Category" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.CategoryType" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.Priority" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.Task" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.User" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__0697FACD" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__Category__TaskId__19AACF41" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__LoseAuth__UserId__625A9A57" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__Task__UserId__282DF8C2" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTaskManagerModel.FK__Task__PriorityId__52E34C9D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

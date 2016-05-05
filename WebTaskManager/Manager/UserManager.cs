@@ -162,7 +162,7 @@ namespace WebTaskManager.Manager
                 c.TaskId,
                 c.TaskName,
                 c.FullDescription,
-                Category = c.Category1.Select(s => s.CategoryTypeId).ToArray(),
+                Category = c.Category.Select(s => s.CategoryTypeId).ToArray(),
                 c.IsPerformance,
                 c.PriorityId,
                 SetDate = c.SetDate.ToString("dd.MM.yyyy"),
@@ -238,6 +238,16 @@ namespace WebTaskManager.Manager
         {
             var taskData = JsonConvert.DeserializeObject<TaskData>(data);
             _userRepository.SaveTask(userId, taskData);
+
+            return new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult RemoveTask(int userId, int taskId)
+        {
+            _userRepository.RemoveTask(userId, taskId);
 
             return new JsonResult
             {

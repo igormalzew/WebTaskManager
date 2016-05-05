@@ -8,7 +8,7 @@ namespace WebTaskManager.Repository
 {
     public class UserRepository
     {
-        private readonly DBTaskManagerContext _model = new DBTaskManagerContext();
+        private readonly DBTaskManagerEntities _model = new DBTaskManagerEntities();
         public AuthorizationUserInfo GetUserAuthorizationInfobyLogin(string login)
         {
             var user = _model.User.FirstOrDefault(c => c.Login == login);
@@ -97,7 +97,7 @@ namespace WebTaskManager.Repository
                 where t.UserId == userId && t.SetDate >= startDate &&
                       t.SetDate <= endDate && (isPerformanceFilter == 1 || t.IsPerformance != 1) &&
                       priorityFilter.Contains(t.PriorityId) &&
-                      (isCaregoryArrEmpty || t.Category1.Where(c => c.TaskId == t.TaskId).Any(c => categoryFilter.Contains(c.CategoryTypeId)))
+                      (isCaregoryArrEmpty || t.Category.Where(c => c.TaskId == t.TaskId).Any(c => categoryFilter.Contains(c.CategoryTypeId)))
                         select t;
 
             return tasks.ToList();
@@ -105,12 +105,13 @@ namespace WebTaskManager.Repository
 
         public List<Task> GetAllTasks(int userId)
         {
-            var today = DateTime.Now;
+            var todayFull = DateTime.Now;
+            var todayStr = todayFull.ToShortDateString();
+            DateTime today;
+            DateTime.TryParse(todayStr, out today);
 
             var tasks = from t in _model.Task
-                        join c in _model.Category on t.TaskId equals c.TaskId
-                        where t.UserId == userId && t.SetDate >= today &&
-                              t.SetDate <= today
+                        where t.UserId == userId && t.SetDate >= today && t.SetDate <= today && t.IsPerformance == 0 // Задача не выполнена
                         select t;
 
             return tasks.ToList();
@@ -158,7 +159,8 @@ namespace WebTaskManager.Repository
                 FullDescription = taskData.Descriptyon,
                 PriorityId = taskData.Priority,
                 SetDate = setDate,
-                IsPerformance = 0
+                IsPerformance = Convert.ToInt32(taskData.IsPerformance),
+                SpendTime = taskData.SpendTime
             };
             _model.Task.Add(task);
 
@@ -190,7 +192,34 @@ namespace WebTaskManager.Repository
             task.FullDescription = taskData.Descriptyon;
             task.PriorityId = taskData.Priority;
             task.SetDate = setDate;
-          
+            task.IsPerformance = Convert.ToInt32(taskData.IsPerformance);
+            task.SpendTime = taskData.SpendTime;
+
+            _model.Category.RemoveRange(_model.Category.Where(c => c.TaskId == task.TaskId));
+
+            if (taskData.TaskCategory != null)
+            {
+                foreach (var categoryType in taskData.TaskCategory)
+                {
+                    var cat = new Category
+                    {
+                        TaskId = task.TaskId,
+                        CategoryTypeId = categoryType
+                    };
+                    task.Category.Add(cat);
+                }
+            }
+
+            _model.SaveChanges();
+        }
+
+        public void RemoveTask(int userId, int taskId)
+        {
+            var task = _model.Task.FirstOrDefault(t => t.UserId == userId && t.TaskId == taskId);
+
+            if (task == null) return;
+
+            _model.Task.Remove(task);
             _model.SaveChanges();
         }
     }

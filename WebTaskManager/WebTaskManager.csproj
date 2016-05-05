@@ -256,7 +256,6 @@
       <DependentUpon>TaskManagerModel.edmx</DependentUpon>
       <LastGenOutput>TaskManagerModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="TaskManagerModel.edmx.sql" />
     <Content Include="TaskManagerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TaskManagerModel.edmx</DependentUpon>

@@ -18,8 +18,7 @@ namespace WebTaskManager
         public int CategoryTypeId { get; set; }
         public int TaskId { get; set; }
     
-        public virtual Task Task { get; set; }
         public virtual CategoryType CategoryType { get; set; }
-        public virtual Task Task1 { get; set; }
+        public virtual Task Task { get; set; }
     }
 }

@@ -1,17 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DBTaskManagerModelStoreContainer" CdmEntityContainer="DBTaskManagerContext">
+  <EntityContainerMapping StorageEntityContainer="DBTaskManagerModelStoreContainer" CdmEntityContainer="DBTaskManagerEntities">
     <EntitySetMapping Name="Category">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Category)">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.Category">
         <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryType">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.CategoryType">
+        <MappingFragment StoreEntitySet="CategoryType">
+          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CoockieByLogin">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.CoockieByLogin">
+        <MappingFragment StoreEntitySet="CoockieByLogin">
+          <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Coockie" ColumnName="Coockie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoseAuth">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.LoseAuth">
+        <MappingFragment StoreEntitySet="LoseAuth">
+          <ScalarProperty Name="LoseId" ColumnName="LoseId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoseTime" ColumnName="LoseTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Priority">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Priority)">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.Priority">
         <MappingFragment StoreEntitySet="Priority">
           <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
           <ScalarProperty Name="PriorityName" ColumnName="PriorityName" />
@@ -19,7 +46,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Task">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Task)">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.Task">
         <MappingFragment StoreEntitySet="Task">
           <ScalarProperty Name="SpendTime" ColumnName="SpendTime" />
           <ScalarProperty Name="TaskId" ColumnName="TaskId" />
@@ -33,7 +60,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="User">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.User)">
+      <EntityTypeMapping TypeName="DBTaskManagerModel.User">
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Login" ColumnName="Login" />
@@ -42,33 +69,6 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LoseAuth">
-      <EntityTypeMapping TypeName="DBTaskManagerModel.LoseAuth">
-        <MappingFragment StoreEntitySet="LoseAuth">
-          <ScalarProperty Name="LoseTime" ColumnName="LoseTime" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="LoseId" ColumnName="LoseId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CoockieByLogin">
-      <EntityTypeMapping TypeName="DBTaskManagerModel.CoockieByLogin">
-        <MappingFragment StoreEntitySet="CoockieByLogin">
-          <ScalarProperty Name="Coockie" ColumnName="Coockie" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CategoryType">
-      <EntityTypeMapping TypeName="DBTaskManagerModel.CategoryType">
-        <MappingFragment StoreEntitySet="CategoryType">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-          <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

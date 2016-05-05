@@ -55,7 +55,7 @@
           <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
           <Property Name="SetDate" Type="date" Nullable="false" />
           <Property Name="IsPerformance" Type="int" Nullable="false" />
-          <Property Name="SpendTime" Type="time" Precision="7" />
+          <Property Name="SpendTime" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -133,14 +133,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Priority__Priori__208CD6FA">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="Priority" Type="Self.Priority" Multiplicity="0..1" />
+        <Association Name="FK__Task__PriorityId__52E34C9D">
+          <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskId" />
+            <Principal Role="Priority">
+              <PropertyRef Name="PriorityId" />
             </Principal>
-            <Dependent Role="Priority">
+            <Dependent Role="Task">
               <PropertyRef Name="PriorityId" />
             </Dependent>
           </ReferentialConstraint>
@@ -185,9 +185,9 @@
             <End Role="User" EntitySet="User" />
             <End Role="LoseAuth" EntitySet="LoseAuth" />
           </AssociationSet>
-          <AssociationSet Name="FK__Priority__Priori__208CD6FA" Association="Self.FK__Priority__Priori__208CD6FA">
-            <End Role="Task" EntitySet="Task" />
+          <AssociationSet Name="FK__Task__PriorityId__52E34C9D" Association="Self.FK__Task__PriorityId__52E34C9D">
             <End Role="Priority" EntitySet="Priority" />
+            <End Role="Task" EntitySet="Task" />
           </AssociationSet>
           <AssociationSet Name="FK__Task__UserId__282DF8C2" Association="Self.FK__Task__UserId__282DF8C2">
             <End Role="User" EntitySet="User" />
@@ -202,186 +202,85 @@
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Category" ToRole="Task" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryTypeId" Type="Int32" Nullable="false" />
           <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CategoryType" Relationship="DBTaskManagerModel.FK__Category__Catego__7D0E9093" FromRole="Category" ToRole="CategoryType" />
-          <NavigationProperty Name="Task1" Relationship="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A" FromRole="Category" ToRole="Task" />
+          <NavigationProperty Name="CategoryType" Relationship="Self.FK__Category__Catego__0697FACD" FromRole="Category" ToRole="CategoryType" />
+          <NavigationProperty Name="Task" Relationship="Self.FK__Category__TaskId__19AACF41" FromRole="Category" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="CategoryType">
+          <Key>
+            <PropertyRef Name="CategoryTypeId" />
+          </Key>
+          <Property Name="CategoryTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Category__Catego__0697FACD" FromRole="CategoryType" ToRole="Category" />
+          <NavigationProperty Name="User" Relationship="Self.FK__CategoryT__UserI__7755B73D" FromRole="CategoryType" ToRole="User" />
+        </EntityType>
+        <EntityType Name="CoockieByLogin">
+          <Key>
+            <PropertyRef Name="CoockieId" />
+          </Key>
+          <Property Name="CoockieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Coockie" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__CoockieBy__UserI__4D5F7D71" FromRole="CoockieByLogin" ToRole="User" />
+        </EntityType>
+        <EntityType Name="LoseAuth">
+          <Key>
+            <PropertyRef Name="LoseId" />
+          </Key>
+          <Property Name="LoseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LoseTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__LoseAuth__UserId__625A9A57" FromRole="LoseAuth" ToRole="User" />
         </EntityType>
         <EntityType Name="Priority">
           <Key>
             <PropertyRef Name="PriorityId" />
           </Key>
-          <Property Name="PriorityId" Type="Int32" Nullable="false" />
+          <Property Name="PriorityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PriorityName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Priority__Priori__25869641" FromRole="Priority" ToRole="Task" />
+          <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Task__PriorityId__52E34C9D" FromRole="Priority" ToRole="Task" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="TaskId" />
           </Key>
-          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TaskName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PriorityId" Type="Int32" Nullable="false" />
           <Property Name="FullDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="SetDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsPerformance" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="Task" ToRole="User" />
-          <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__267ABA7A" FromRole="Task" ToRole="Category" />
-          <NavigationProperty Name="Priority" Relationship="DBTaskManagerModel.FK__Priority__Priori__25869641" FromRole="Task" ToRole="Priority" />
-          <Property Name="SpendTime" Type="Time" Precision="7" />
-          <NavigationProperty Name="Category1" Relationship="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A" FromRole="Task" ToRole="Category" />
+          <Property Name="SpendTime" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Category__TaskId__19AACF41" FromRole="Task" ToRole="Category" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Task__UserId__282DF8C2" FromRole="Task" ToRole="User" />
+          <NavigationProperty Name="Priority" Relationship="DBTaskManagerModel.FK__Task__PriorityId__52E34C9D" FromRole="Task" ToRole="Priority" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Login" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="HashPassword" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Task" Relationship="DBTaskManagerModel.FK__Task__UserId__21B6055D" FromRole="User" ToRole="Task" />
-          <NavigationProperty Name="LoseAuth" Relationship="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" FromRole="User" ToRole="LoseAuth" />
-          <NavigationProperty Name="CoockieByLogin1" Relationship="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" FromRole="User" ToRole="CoockieByLogin" />
-          <NavigationProperty Name="CategoryType" Relationship="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" FromRole="User" ToRole="CategoryType" />
+          <NavigationProperty Name="CategoryType" Relationship="Self.FK__CategoryT__UserI__7755B73D" FromRole="User" ToRole="CategoryType" />
+          <NavigationProperty Name="CoockieByLogin" Relationship="Self.FK__CoockieBy__UserI__4D5F7D71" FromRole="User" ToRole="CoockieByLogin" />
+          <NavigationProperty Name="LoseAuth" Relationship="Self.FK__LoseAuth__UserId__625A9A57" FromRole="User" ToRole="LoseAuth" />
+          <NavigationProperty Name="Task" Relationship="Self.FK__Task__UserId__282DF8C2" FromRole="User" ToRole="Task" />
         </EntityType>
-        <EntityContainer Name="DBTaskManagerContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Category" EntityType="Self.Category" />
-          <EntitySet Name="Priority" EntityType="Self.Priority" />
-          <EntitySet Name="Task" EntityType="Self.Task" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <AssociationSet Name="FK__Task__UserId__21B6055D" Association="DBTaskManagerModel.FK__Task__UserId__21B6055D">
-            <End Role="User" EntitySet="User" />
-            <End Role="Task" EntitySet="Task" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Category__Catego__267ABA7A" Association="DBTaskManagerModel.FK__Category__Catego__267ABA7A">
-            <End Role="Task" EntitySet="Task" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Priority__Priori__25869641" Association="DBTaskManagerModel.FK__Priority__Priori__25869641">
-            <End Role="Task" EntitySet="Task" />
-            <End Role="Priority" EntitySet="Priority" />
-          </AssociationSet>
-          <EntitySet Name="LoseAuth" EntityType="DBTaskManagerModel.LoseAuth" />
-          <AssociationSet Name="FK__LoseAuth__UserId__49C3F6B7" Association="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7">
-            <End Role="User" EntitySet="User" />
-            <End Role="LoseAuth" EntitySet="LoseAuth" />
-          </AssociationSet>
-          <EntitySet Name="CoockieByLogin" EntityType="DBTaskManagerModel.CoockieByLogin" />
-          <AssociationSet Name="FK__CoockieBy__UserI__4D5F7D71" Association="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71">
-            <End Role="User" EntitySet="User" />
-            <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
-          </AssociationSet>
-          <EntitySet Name="CategoryType" EntityType="DBTaskManagerModel.CategoryType" />
-          <AssociationSet Name="FK__Category__Catego__7D0E9093" Association="DBTaskManagerModel.FK__Category__Catego__7D0E9093">
-            <End Role="CategoryType" EntitySet="CategoryType" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Category__TaskId__7C1A6C5A" Association="DBTaskManagerModel.FK__Category__TaskId__7C1A6C5A">
-            <End Role="Task" EntitySet="Task" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CategoryT__UserI__7755B73D" Association="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D">
-            <End Role="User" EntitySet="User" />
-            <End Role="CategoryType" EntitySet="CategoryType" />
-          </AssociationSet>
-        </EntityContainer>
-        <Association Name="FK__Task__UserId__21B6055D">
-          <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.Task" Role="Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Category__Catego__267ABA7A">
-          <End Type="DBTaskManagerModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.Category" Role="Category" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Priority__Priori__25869641">
-          <End Type="DBTaskManagerModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.Priority" Role="Priority" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="Priority">
-              <PropertyRef Name="PriorityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="LoseAuth">
-          <Key>
-            <PropertyRef Name="LoseId" />
-          </Key>
-          <Property Name="LoseId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="LoseTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__LoseAuth__UserId__49C3F6B7" FromRole="LoseAuth" ToRole="User" />
-        </EntityType>
-        <Association Name="FK__LoseAuth__UserId__49C3F6B7">
-          <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.LoseAuth" Role="LoseAuth" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="LoseAuth">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CoockieByLogin">
-          <Key>
-            <PropertyRef Name="CoockieId" />
-          </Key>
-          <Property Name="CoockieId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Coockie" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__CoockieBy__UserI__4D5F7D71" FromRole="CoockieByLogin" ToRole="User" />
-        </EntityType>
-        <Association Name="FK__CoockieBy__UserI__4D5F7D71">
-          <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.CoockieByLogin" Role="CoockieByLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="CoockieByLogin">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CategoryType">
-          <Key>
-            <PropertyRef Name="CategoryTypeId" />
-          </Key>
-          <Property Name="CategoryTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="DBTaskManagerModel.FK__Category__Catego__7D0E9093" FromRole="CategoryType" ToRole="Category" />
-          <NavigationProperty Name="User" Relationship="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" FromRole="CategoryType" ToRole="User" />
-        </EntityType>
-        <Association Name="FK__Category__Catego__7D0E9093">
-          <End Type="DBTaskManagerModel.CategoryType" Role="CategoryType" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.Category" Role="Category" Multiplicity="*" />
+        <Association Name="FK__Category__Catego__0697FACD">
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CategoryType">
               <PropertyRef Name="CategoryTypeId" />
@@ -391,9 +290,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Category__TaskId__7C1A6C5A">
-          <End Type="DBTaskManagerModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.Category" Role="Category" Multiplicity="*" />
+        <Association Name="FK__Category__TaskId__19AACF41">
+          <End Role="Task" Type="Self.Task" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Task">
               <PropertyRef Name="TaskId" />
@@ -404,8 +305,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CategoryT__UserI__7755B73D">
-          <End Type="DBTaskManagerModel.User" Role="User" Multiplicity="1" />
-          <End Type="DBTaskManagerModel.CategoryType" Role="CategoryType" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="UserId" />
@@ -415,85 +316,171 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CoockieBy__UserI__4D5F7D71">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CoockieByLogin" Type="Self.CoockieByLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CoockieByLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoseAuth__UserId__625A9A57">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LoseAuth" Type="Self.LoseAuth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LoseAuth">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__UserId__282DF8C2">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBTaskManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="CategoryType" EntityType="Self.CategoryType" />
+          <EntitySet Name="CoockieByLogin" EntityType="Self.CoockieByLogin" />
+          <EntitySet Name="LoseAuth" EntityType="Self.LoseAuth" />
+          <EntitySet Name="Priority" EntityType="Self.Priority" />
+          <EntitySet Name="Task" EntityType="Self.Task" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK__Category__Catego__0697FACD" Association="Self.FK__Category__Catego__0697FACD">
+            <End Role="CategoryType" EntitySet="CategoryType" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__TaskId__19AACF41" Association="Self.FK__Category__TaskId__19AACF41">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CategoryT__UserI__7755B73D" Association="Self.FK__CategoryT__UserI__7755B73D">
+            <End Role="User" EntitySet="User" />
+            <End Role="CategoryType" EntitySet="CategoryType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CoockieBy__UserI__4D5F7D71" Association="Self.FK__CoockieBy__UserI__4D5F7D71">
+            <End Role="User" EntitySet="User" />
+            <End Role="CoockieByLogin" EntitySet="CoockieByLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoseAuth__UserId__625A9A57" Association="Self.FK__LoseAuth__UserId__625A9A57">
+            <End Role="User" EntitySet="User" />
+            <End Role="LoseAuth" EntitySet="LoseAuth" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__UserId__282DF8C2" Association="Self.FK__Task__UserId__282DF8C2">
+            <End Role="User" EntitySet="User" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__PriorityId__52E34C9D" Association="DBTaskManagerModel.FK__Task__PriorityId__52E34C9D">
+            <End EntitySet="Priority" Role="Priority" />
+            <End EntitySet="Task" Role="Task" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__Task__PriorityId__52E34C9D">
+          <End Type="DBTaskManagerModel.Priority" Multiplicity="1" Role="Priority" />
+          <End Type="DBTaskManagerModel.Task" Multiplicity="*" Role="Task" />
+          <ReferentialConstraint>
+            <Principal Role="Priority">
+              <PropertyRef Name="PriorityId" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="PriorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DBTaskManagerModelStoreContainer" CdmEntityContainer="DBTaskManagerContext">
-    <EntitySetMapping Name="Category">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Category)">
-        <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBTaskManagerModelStoreContainer" CdmEntityContainer="DBTaskManagerEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.Category">
+              <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Priority">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Priority)">
-        <MappingFragment StoreEntitySet="Priority">
-          <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
-          <ScalarProperty Name="PriorityName" ColumnName="PriorityName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Task">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.Task)">
-        <MappingFragment StoreEntitySet="Task">
-          <ScalarProperty Name="SpendTime" ColumnName="SpendTime" />
+                <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
-          <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
-          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
-          <ScalarProperty Name="SetDate" ColumnName="SetDate" />
-          <ScalarProperty Name="IsPerformance" ColumnName="IsPerformance" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="User">
-      <EntityTypeMapping TypeName="IsTypeOf(DBTaskManagerModel.User)">
-        <MappingFragment StoreEntitySet="User">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="Login" ColumnName="Login" />
-          <ScalarProperty Name="HashPassword" ColumnName="HashPassword" />
-          <ScalarProperty Name="Salt" ColumnName="Salt" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-          <EntitySetMapping Name="LoseAuth">
-            <EntityTypeMapping TypeName="DBTaskManagerModel.LoseAuth">
-              <MappingFragment StoreEntitySet="LoseAuth">
-                <ScalarProperty Name="LoseTime" ColumnName="LoseTime" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoseId" ColumnName="LoseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CoockieByLogin">
-            <EntityTypeMapping TypeName="DBTaskManagerModel.CoockieByLogin">
-              <MappingFragment StoreEntitySet="CoockieByLogin">
-                <ScalarProperty Name="Coockie" ColumnName="Coockie" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CategoryType">
             <EntityTypeMapping TypeName="DBTaskManagerModel.CategoryType">
               <MappingFragment StoreEntitySet="CategoryType">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-  </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+          <EntitySetMapping Name="CoockieByLogin">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.CoockieByLogin">
+              <MappingFragment StoreEntitySet="CoockieByLogin">
+                <ScalarProperty Name="CoockieId" ColumnName="CoockieId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Coockie" ColumnName="Coockie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoseAuth">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.LoseAuth">
+              <MappingFragment StoreEntitySet="LoseAuth">
+                <ScalarProperty Name="LoseId" ColumnName="LoseId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoseTime" ColumnName="LoseTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Priority">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.Priority">
+              <MappingFragment StoreEntitySet="Priority">
+                <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
+                <ScalarProperty Name="PriorityName" ColumnName="PriorityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="SpendTime" ColumnName="SpendTime" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
+                <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+                <ScalarProperty Name="SetDate" ColumnName="SetDate" />
+                <ScalarProperty Name="IsPerformance" ColumnName="IsPerformance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DBTaskManagerModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="HashPassword" ColumnName="HashPassword" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -507,7 +494,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

@@ -50,7 +50,7 @@
     <Property Name="FullDescription" Type="nvarchar" MaxLength="300" />
     <Property Name="SetDate" Type="date" Nullable="false" />
     <Property Name="IsPerformance" Type="int" Nullable="false" />
-    <Property Name="SpendTime" Type="time" Precision="7" />
+    <Property Name="SpendTime" Type="int" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -128,14 +128,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Priority__Priori__208CD6FA">
-    <End Role="Task" Type="Self.Task" Multiplicity="1" />
-    <End Role="Priority" Type="Self.Priority" Multiplicity="0..1" />
+  <Association Name="FK__Task__PriorityId__52E34C9D">
+    <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Task">
-        <PropertyRef Name="TaskId" />
+      <Principal Role="Priority">
+        <PropertyRef Name="PriorityId" />
       </Principal>
-      <Dependent Role="Priority">
+      <Dependent Role="Task">
         <PropertyRef Name="PriorityId" />
       </Dependent>
     </ReferentialConstraint>
@@ -180,9 +180,9 @@
       <End Role="User" EntitySet="User" />
       <End Role="LoseAuth" EntitySet="LoseAuth" />
     </AssociationSet>
-    <AssociationSet Name="FK__Priority__Priori__208CD6FA" Association="Self.FK__Priority__Priori__208CD6FA">
-      <End Role="Task" EntitySet="Task" />
+    <AssociationSet Name="FK__Task__PriorityId__52E34C9D" Association="Self.FK__Task__PriorityId__52E34C9D">
       <End Role="Priority" EntitySet="Priority" />
+      <End Role="Task" EntitySet="Task" />
     </AssociationSet>
     <AssociationSet Name="FK__Task__UserId__282DF8C2" Association="Self.FK__Task__UserId__282DF8C2">
       <End Role="User" EntitySet="User" />
