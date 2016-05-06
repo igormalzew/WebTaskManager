@@ -178,5 +178,37 @@ namespace WebTaskManager.Controllers
             }
             return null;
         }
+
+        public ActionResult PassRecovery()
+        {
+            ViewBag.IsAuthorized = false;
+            ViewBag.UserName = String.Empty;
+            return View();
+        }
+
+        public JsonResult PassRecoveryRequest(string email)
+        {
+            return _userManager.PassRecoveryRequest(email);
+        }
+
+        public ActionResult EmailPassRecovery(int userId, string hash)
+        {
+            var coockieByLogin = _userManager.GetCoockieRecord(hash);
+            if (coockieByLogin != null && coockieByLogin.UserId == userId)
+            {
+                ViewBag.IsAuthorized = false;
+                ViewBag.UserName = String.Empty;
+                ViewBag.userHash = hash;
+                return View();
+            }
+            ViewBag.IsAuthorized = false;
+            ViewBag.UserName = String.Empty;
+            return RedirectToAction("index", "home");
+        }
+        public JsonResult SaveRecoveryPass(string hash, string pass)
+        {
+            return _userManager.SaveRecoveryPass(hash, pass);
+        }
+        
     }
 }

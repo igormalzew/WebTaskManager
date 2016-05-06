@@ -11,9 +11,20 @@ var TaskApp = angular.module("TaskApp", ["ngTable"])
     return function (scope, element, attrs) {
         scope.user.timeFormat = Math.floor(scope.user.SpendTime / 60) + ':' + scope.user.SpendTime % 60;
         }
+})
+.directive("priorityDirective", function() {
+        return function (scope, element, attrs) {
+            if (scope.user.PriorityId === 1) {
+                element.attr('class', 'bl-mark btn-danger');
+            } else if (scope.user.PriorityId === 2) {
+                element.attr('class', 'bl-mark btn-warning');
+            } else {
+                element.attr('class', 'bl-mark btn-success');
+            }
+        }
     });
 
-TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
+TaskApp.controller("TaskController", function ($scope, NgTableParams, $http, $filter) {
     $scope.CategoryMain = false;
     $scope.PriorityMain = true;
 
@@ -25,14 +36,18 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
     var self = this;
 
     function getParams(userfilter) {
-        return new NgTableParams({}, {
+        return new NgTableParams({
+            sorting: {
+                name: 'asc'
+            }
+        }, {
             getData: function ($defer, params) {
                 $http({
                     url: 'GetTasks', 
                     method: "GET",
                     params: { filter: userfilter }
                 }).success(function (data) {
-                    $defer.resolve(data);
+                    $defer.resolve($filter('orderBy')(data, params.orderBy()));
                 });
 
             }
@@ -174,6 +189,7 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
             $scope.taskDescription = taskData.FullDescription;
             $scope.taskPriorityOption = taskData.PriorityId;
             $('#taskCategorySelect').multiselect('select', taskData.Category);
+            $('#taskCategorySelect').multiselect('rebuild');
             $('#dateTimeTask').val(taskData.SetDate);
 
             $('#IsPerformanceTask').bootstrapSwitch('state', Boolean(taskData.IsPerformance), true);
@@ -222,6 +238,7 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http) {
         $scope.mainTaskInput = '';
         $scope.taskDescription = '';
         $scope.taskPriorityOption = 2;
+        $('#IsPerformanceTask').bootstrapSwitch('state', false, true);
         $('#taskCategorySelect').val('');
         $('#taskCategorySelect').multiselect('rebuild');
         $('#dateTimeTask').val(moment().format('DD.MM.YYYY'));

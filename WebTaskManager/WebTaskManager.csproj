@@ -177,6 +177,7 @@
     <Compile Include="LoseAuth.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MailSender\MailSender.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\repository\AuthorizationUserInfo.cs" />
     <Compile Include="Models\repository\ErrorResult.cs" />
@@ -229,6 +230,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\js\PassRecoveryModel.js" />
     <Content Include="Models\js\RegistrationModel.js" />
     <Content Include="Models\js\AuthorizationModel.js" />
     <Content Include="Models\js\TaskModel.js" />
@@ -296,6 +298,8 @@
     <Content Include="TaskManagerModel.edmx.diagram">
       <DependentUpon>TaskManagerModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\PassRecovery.cshtml" />
+    <Content Include="Views\Home\EmailPassRecovery.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

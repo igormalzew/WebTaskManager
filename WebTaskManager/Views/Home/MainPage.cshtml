@@ -99,7 +99,7 @@
                         <div class="col-md-12">
                             <h3 class="panel-title">
                                 <span class="glyphicon glyphicon-tasks"></span>&nbsp;Категория&nbsp;
-                                <a ng-click="CategoryChanges()" style="cursor: pointer; font-family: cursive"><span class="glyphicon glyphicon-pencil"></span>изменить</a><br/>
+                                <a class="{{IsTaskEdit ? 'not-active' : ''}}" ng-click="CategoryChanges()" style="cursor: pointer; font-family: cursive"><span class="glyphicon glyphicon-pencil"></span>изменить</a><br/>
                             </h3>
                         </div>
                     </div>
@@ -148,18 +148,13 @@
                     <div ng-show="vm.tableParams.data.length != 0">
                         <table ng-table="vm.tableParams" class="table table-bordered table-hover">
                             <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
-                                <td style="width: 1%">
-                                    <span class="bl-mark" style="background-color: red"></span>
-                                </td>
-                                <td title="'Наименование'" sortable="'name'" style="width: 44%">
-                                    {{user.TaskName}}
-                                </td>
-                                <td style="width: 3%">
+                                <td title="'Наименование'" sortable="'TaskName'" style="width: 44%; padding: 10px 15px;" >
+                                    <span priority-directive="user" class="bl-mark"></span> {{user.TaskName}}
                                     <a ng-click="TaskChanges(this.user)" class="btn btn-default pull-right row-info-sign btn-mini">
                                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                     </a>
                                 </td>
-                                <td title="'Дата'" sortable="'age'" style="width: 20%; text-align: center">
+                                <td title="'Дата'" sortable="'SetDate'" style="width: 20%; text-align: center">
                                     {{user.SetDate}}
                                 </td>
                                 <td tasktime-directive="user" title="'Затраты'" style="width: 20%; text-align: center">
@@ -217,13 +212,13 @@
                                                 <div style="height: 4px"></div>
                                                 <div class="btn-group" style="float: right">
                                                     <label class="btn btn-success">
-                                                        <input type="radio" ng-model="taskPriorityOption" value="1"> Низкий
+                                                        <input type="radio" ng-model="taskPriorityOption" value="3"> Низкий
                                                     </label>
                                                     <label class="btn btn-warning">
                                                         <input type="radio" ng-model="taskPriorityOption" value="2"> Средний
                                                     </label>
                                                     <label class="btn btn-danger">
-                                                        <input type="radio" ng-model="taskPriorityOption" value="3"> Высокий
+                                                        <input type="radio" ng-model="taskPriorityOption" value="1"> Высокий
                                                     </label>
                                                 </div>
                                             </div>
@@ -243,7 +238,7 @@
                                         <div class="form-group col-md-8">
                                             <div style="height: 4px"></div>
                                             <select class="form-control" id="taskCategorySelect" multiple="multiple" style="float: right">
-                                                <option ng-repeat="category in CategoryArray" value="{{category.CategoryTypeId}}">{{category.CategoryName}}</option>
+                                                <option ng-repeat="cat in CategoryArray" value="{{cat.CategoryTypeId}}">{{cat.CategoryName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -356,8 +351,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button ng-click="CategoryRefresh()" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button ng-click="SaveChangedCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                <button ng-click="CategoryRefresh();" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button ng-click="SaveChangedCategory();" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
             </div>
         </div>
     </div>
@@ -372,7 +367,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button ng-click="RemoveTask();TaskCancel()" type="button" class="btn btn-primary" data-dismiss="modal">Удалить</button>
+                    <button ng-click="RemoveTask();" type="button" class="btn btn-primary" data-dismiss="modal">Удалить</button>
                 </div>
             </div>
         </div>

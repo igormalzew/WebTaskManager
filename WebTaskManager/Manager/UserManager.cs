@@ -254,5 +254,85 @@ namespace WebTaskManager.Manager
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult PassRecoveryRequest(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+
+            if (user != null)
+            {
+                var saltByCoockie = Crypto.Crypto.GenerateRandomSalt();
+                var coockie = Crypto.Crypto.GetHash(user.Email + saltByCoockie);
+                _userRepository.AddCoockieRecord(user.Login, coockie);
+
+                string msg = String.Format("http://localhost:2035/Home/EmailPassRecovery?userId={0}&hash={1}",user.UserId, coockie );
+                
+
+                try
+                {
+                    MailSender.MailSender.SendMessage(user.Email, msg);
+                }
+              catch (Exception ex)
+                {
+                    return new JsonResult
+                    {
+                        Data = new ErrorResult
+                        {
+                            IsError = true,
+                            ErrorMessage = "Непредвиденная ошибка. Повторите попытку"
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                return new JsonResult
+                {
+                    Data = new ErrorResult
+                    {
+                        IsError = false,
+                        ErrorMessage = ""
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            return new JsonResult
+                {
+                    Data = new ErrorResult
+                    {
+                        IsError = true,
+                        ErrorMessage = "Указанный email не найден"
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+        }
+
+        public JsonResult SaveRecoveryPass(string hash, string pass)
+        {
+            var coockieByLogin = GetCoockieRecord(hash);
+
+            if (coockieByLogin != null)
+            {
+                _userRepository.SavePass(coockieByLogin.User, pass);
+
+                return new JsonResult
+                {
+                    Data = new ErrorResult
+                    {
+                        IsError = false
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            return new JsonResult
+            {
+                Data = new ErrorResult
+                {
+                    IsError = true
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        
     }
 }

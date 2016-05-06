@@ -71,3 +71,7 @@ td {
     top: 40%;
     transform: translate(-50%,-50%);
 }
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}

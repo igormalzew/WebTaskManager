@@ -100,7 +100,7 @@ namespace WebTaskManager.Repository
                       (isCaregoryArrEmpty || t.Category.Where(c => c.TaskId == t.TaskId).Any(c => categoryFilter.Contains(c.CategoryTypeId)))
                         select t;
 
-            return tasks.ToList();
+            return tasks.OrderBy(c => c.PriorityId).ToList();
         }
 
         public List<Task> GetAllTasks(int userId)
@@ -114,7 +114,7 @@ namespace WebTaskManager.Repository
                         where t.UserId == userId && t.SetDate >= today && t.SetDate <= today && t.IsPerformance == 0 // Задача не выполнена
                         select t;
 
-            return tasks.ToList();
+            return tasks.OrderBy(c => c.PriorityId).ToList();
         }
 
         public IQueryable<CategoryType> GetCategory(int userId)
@@ -220,6 +220,23 @@ namespace WebTaskManager.Repository
             if (task == null) return;
 
             _model.Task.Remove(task);
+            _model.SaveChanges();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _model.User.FirstOrDefault(t => t.Email == email);
+
+        }
+
+        public void SavePass(User user ,string pass)
+        {
+            var saltByCoockie = Crypto.Crypto.GenerateRandomSalt();
+            var coockie = Crypto.Crypto.GetHash(pass + saltByCoockie);
+
+            user.HashPassword = coockie;
+            user.Salt = saltByCoockie;
+
             _model.SaveChanges();
         }
     }
