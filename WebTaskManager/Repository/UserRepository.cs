@@ -76,6 +76,15 @@ namespace WebTaskManager.Repository
                 Email = email
             };
 
+            var categoryArr = new List<string> {"Дом", "Семья", "Работа"};
+            foreach (var catType in categoryArr)
+            {
+                newUser.CategoryType.Add(new CategoryType
+                {
+                    CategoryName = catType
+                });
+            }
+
             _model.User.Add(newUser);
             _model.SaveChanges();
         }

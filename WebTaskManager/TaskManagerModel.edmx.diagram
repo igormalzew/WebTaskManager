@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bdf125cafc064003bdca012af81e08bc" Name="Diagram1">
-        <EntityTypeShape EntityType="DBTaskManagerModel.Category" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.CategoryType" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.Priority" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.Task" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTaskManagerModel.User" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+      <Diagram DiagramId="bdf125cafc064003bdca012af81e08bc" Name="Diagram1" ZoomLevel="103">
+        <EntityTypeShape EntityType="DBTaskManagerModel.Category" Width="1.5" PointX="2.625" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.CategoryType" Width="1.5" PointX="0.875" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.CoockieByLogin" Width="1.5" PointX="7.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.LoseAuth" Width="1.5" PointX="5.375" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.Priority" Width="1.5" PointX="5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.Task" Width="1.5" PointX="2.875" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTaskManagerModel.User" Width="1.5" PointX="4.375" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Category__Catego__0697FACD" ManuallyRouted="false" />
         <AssociationConnector Association="DBTaskManagerModel.FK__Category__TaskId__19AACF41" ManuallyRouted="false" />
         <AssociationConnector Association="DBTaskManagerModel.FK__CategoryT__UserI__7755B73D" ManuallyRouted="false" />
