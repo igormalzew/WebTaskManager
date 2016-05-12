@@ -41,13 +41,18 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http, $fi
                 name: 'asc'
             }
         }, {
+
             getData: function ($defer, params) {
                 $http({
                     url: 'GetTasks', 
                     method: "GET",
                     params: { filter: userfilter }
                 }).success(function (data) {
-                    $defer.resolve($filter('orderBy')(data, params.orderBy()));
+                    var sortData = $filter('orderBy')(data, params.orderBy());
+                    var start = (params.page() - 1) * params.count();
+                    var end = start + params.count();
+                    $defer.resolve(sortData.slice(start, end));
+                    params.total(data.length);
                 });
 
             }
