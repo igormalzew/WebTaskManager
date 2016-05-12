@@ -13,6 +13,7 @@ RegistrationApp.controller("Registration", function ($scope, $http) {
 
     $scope.btbRegister = function () {
         $scope.IsError = false;
+        $scope.RegAnswerMsg = "";
 
         $scope.NameErMs = "";
         $scope.LoginErMs = "";

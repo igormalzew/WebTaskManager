@@ -187,6 +187,7 @@ TaskApp.controller("TaskController", function ($scope, NgTableParams, $http, $fi
             nSelectedText: ' категорий',
             allSelectedText: 'Выбраны все категории'
         });
+        $('#taskCategorySelect').multiselect('rebuild');
         if (taskData !== undefined && taskData !== null) {
             $scope.currentEditTaskId = taskData.TaskId;
 
