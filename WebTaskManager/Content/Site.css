@@ -75,3 +75,7 @@ td {
    pointer-events: none;
    cursor: default;
 }
+
+.bootstrap-switch-handle-off {
+    white-space: nowrap;
+}

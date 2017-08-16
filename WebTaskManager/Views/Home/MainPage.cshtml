@@ -151,7 +151,7 @@
                         <div ng-show="vm.tableParams.data.length != 0">
                             <table ng-table="vm.tableParams" class="table table-bordered table-hover">
                                 <tr ng-repeat="user in $data" id={{user.TaskId}} style="height: 30px; position: relative">
-                                    <td title="'Наименование'" sortable="'TaskName'" style="width: 44%; padding: 10px 15px;">
+                                    <td title="'Наименование'" sortable="'TaskName'" style="width: 44%; padding: 10px 15px; position: relative">
                                         <span priority-directive="user" class="bl-mark"></span> {{user.TaskName}}
                                         <a ng-click="TaskChanges(this.user)" class="btn btn-default pull-right row-info-sign btn-mini">
                                             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
